@@ -1,0 +1,51 @@
+{
+  "name": "paycebo",
+  "version": "1.0.0",
+  "private": true,
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "check": "npm run test && npm run typecheck",
+    "verify:source": "node scripts/verify-source.cjs",
+    "doctor": "npx expo-doctor",
+    "export": "expo export --platform all"
+  },
+  "dependencies": {
+    "@expo-google-fonts/aleo": "^0.4.0",
+    "@expo/vector-icons": "^15.0.2",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-navigation/native": "^7.1.33",
+    "expo": "~55.0.31",
+    "expo-constants": "~55.0.17",
+    "expo-font": "~55.0.8",
+    "expo-haptics": "~55.0.18",
+    "expo-linear-gradient": "~55.0.18",
+    "expo-linking": "~55.0.17",
+    "expo-router": "~55.0.18",
+    "expo-status-bar": "~55.0.6",
+    "expo-system-ui": "~55.0.22",
+    "nativewind": "4.2.7",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-native": "0.83.10",
+    "react-native-gesture-handler": "~2.30.0",
+    "react-native-reanimated": "4.2.1",
+    "react-native-safe-area-context": "~5.6.2",
+    "react-native-screens": "~4.23.0",
+    "react-native-svg": "15.15.3",
+    "react-native-web": "~0.21.0",
+    "react-native-worklets": "0.7.4"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.2",
+    "babel-preset-expo": "~55.0.0",
+    "tailwindcss": "3.4.19",
+    "typescript": "~5.9.2"
+  },
+  "engines": { "node": ">=22.13.0" }
+}

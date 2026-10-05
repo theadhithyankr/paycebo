@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "name": "Paycebo",
+    "slug": "paycebo",
+    "scheme": "paycebo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "backgroundColor": "#0B0B0C",
+    "ios": { "supportsTablet": false, "bundleIdentifier": "app.paycebo.mobile" },
+    "android": { "package": "app.paycebo.mobile", "predictiveBackGestureEnabled": true },
+    "web": { "bundler": "metro", "output": "single", "name": "Paycebo", "themeColor": "#0B0B0C" },
+    "plugins": ["expo-router", "expo-font"],
+    "experiments": { "typedRoutes": true }
+  }
+}
