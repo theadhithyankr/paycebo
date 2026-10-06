@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title id="title">Paycebo</title>
+  <rect width="96" height="96" rx="26" fill="#0B1711"/>
+  <g transform="translate(19 15) scale(1.8)">
+    <path d="M8 28V6h8a9 9 0 0 1 0 18h-4M8 15h8a3 3 0 0 1 0 6h-4" fill="none" stroke="#86DB6E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
