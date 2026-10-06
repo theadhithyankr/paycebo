@@ -11,7 +11,7 @@ import { useSavings } from "../../src/state/SavingsProvider";
 type ChatItem = { type: "transaction"; value: Transaction } | { type: "reminder"; value: Reminder };
 export default function GoalChat() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { state, refreshReminders } = useSavings();
+  const { state, refreshReminders, now } = useSavings();
   const list = useRef<FlatList<ChatItem>>(null);
   const lastScrollCount = useRef(-1);
   useFocusEffect(useCallback(() => { void refreshReminders(); }, [refreshReminders]));
@@ -48,7 +48,7 @@ export default function GoalChat() {
           <GoalAvatar goal={goal} progress={progress} size={100} />
           <Display style={{ fontSize: 34, lineHeight: 44, marginTop: 8 }}>{money(saved)}</Display>
           <Txt className="text-muted" style={{ fontSize: 14 }}>of {money(goal.targetPaise)} · {Math.round(progress * 100)}% saved</Txt>
-          <View className="h-1.5 w-full rounded-full bg-line mt-3 overflow-hidden"><View style={{ width: (progress * 100) + "%", height: "100%", backgroundColor: goal.color }} /></View>
+          <View className="h-1.5 w-full rounded-full bg-line mt-3 overflow-hidden"><View style={{ width: `${progress * 100}%`, height: "100%", backgroundColor: goal.color }} /></View>
           <Txt className="text-muted" style={{ fontSize: 13, textAlign: "center" }}>{goal.weeklyPaise ? money(goal.weeklyPaise) + " weekly · " + WEEKDAYS[goal.dueDay - 1] : "At your own pace. Every little bit counts."}</Txt>
         </View>
         <View className="self-start rounded-2xl rounded-tl-sm bg-surface p-4" style={{ maxWidth: "90%" }}>
@@ -62,7 +62,7 @@ export default function GoalChat() {
         </View>;
         const tx = item.value;
         const paid = tx.kind === "contribution";
-        return <View className="self-end rounded-2xl rounded-tr-sm p-4 gap-2" style={{ maxWidth: "90%", minWidth: 170, backgroundColor: paid ? "#252C25" : "#35241F" }}>
+        return <View className="self-end rounded-2xl rounded-tr-sm p-4 gap-2" style={{ maxWidth: "90%", minWidth: 170, backgroundColor: paid ? "#E2EEDD" : "#FCE9E9" }}>
           <View className="flex-row items-center gap-2"><Icon name={paid ? "arrow-up-right" : "arrow-down-left"} size={18} color={paid ? palette.positive : palette.danger} /><Txt style={{ color: paid ? palette.positive : palette.danger, fontSize: 12 }}>{paid ? "Paid to your goal" : "Requested back"}</Txt></View>
           <Txt style={{ fontSize: 30, lineHeight: 38, fontWeight: "600", fontVariant: ["tabular-nums"] }}>{paid ? "" : "−"}{money(tx.amountPaise)}</Txt>
           {tx.note ? <Txt>{tx.note}</Txt> : null}
@@ -71,8 +71,8 @@ export default function GoalChat() {
       }}
       ListFooterComponent={progress >= 1 ? <View className="items-center py-6 gap-2"><Icon name="check-circle" size={26} color={palette.positive} /><Display style={{ fontSize: 25 }}>You made it.</Display><Txt className="text-muted" style={{ textAlign: "center" }}>Fully funded. Take a moment to enjoy that.</Txt></View> : items.length === 0 ? <Txt className="text-muted py-4" style={{ textAlign: "center", fontSize: 13 }}>No payments yet. Your first little win is waiting.</Txt> : null} />
     <SafeAreaView edges={["bottom"]} className="border-t border-line bg-background px-6 pt-4">
-      <View className="flex-row flex-wrap gap-3"><View className="flex-1" style={{ minWidth: 140 }}><Button label="Request Money" variant="secondary" disabled={saved <= 0} onPress={() => pay("withdrawal")} /></View><View className="flex-1" style={{ minWidth: 100 }}><Button label={progress >= 1 ? "Funded" : "Pay"} icon={progress >= 1 ? "check" : "arrow-up-right"} disabled={progress >= 1 || safeToSpend(state) <= 0} onPress={() => pay("contribution")} /></View></View>
-      <Txt className="text-muted py-3" style={{ textAlign: "center", fontSize: 12, lineHeight: 18 }}>{safeToSpend(state) <= 0 && progress < 1 ? "Update your bank balance or request funds back to pay a goal." : "An allocation, not a bank transfer."}</Txt>
+      <View className="flex-row flex-wrap gap-3"><View className="flex-1" style={{ minWidth: 140 }}><Button label="Request Money" variant="secondary" disabled={saved <= 0} onPress={() => pay("withdrawal")} /></View><View className="flex-1" style={{ minWidth: 100 }}><Button label={progress >= 1 ? "Funded" : "Pay"} icon={progress >= 1 ? "check" : "arrow-up-right"} disabled={progress >= 1 || safeToSpend(state, now) <= 0} onPress={() => pay("contribution")} /></View></View>
+      <Txt className="text-muted py-3" style={{ textAlign: "center", fontSize: 12, lineHeight: 18 }}>{safeToSpend(state, now) <= 0 && progress < 1 ? "Update your bank balance or request funds back to pay a goal." : "An allocation, not a bank transfer."}</Txt>
     </SafeAreaView>
   </Page>;
 }

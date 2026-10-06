@@ -1,15 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "class",
   content: ["./app/**/*.{js,jsx,ts,tsx}", "./src/**/*.{js,jsx,ts,tsx}"],
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
       colors: {
-        background: "#0B0B0C", surface: "#181819", elevated: "#222223",
-        foreground: "#F5F2EC", muted: "#B2AFA9", accent: "#EDB780",
-        line: "#343332", positive: "#A9D6B2", danger: "#FFB1A5",
+        background: "#F4F5F1", surface: "#FFFFFF", elevated: "#E9EDE5",
+        foreground: "#17221A", muted: "#5D675F", accent: "#86DB6E",
+        line: "#D8DFD3", positive: "#257338", danger: "#A42E38",
       },
-      fontFamily: { display: ["Aleo_400Regular"], "display-bold": ["Aleo_700Bold"] },
+      fontFamily: { display: ["Manrope_400Regular"], "display-bold": ["Manrope_700Bold"] },
     },
   },
   plugins: [],

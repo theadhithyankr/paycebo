@@ -1,6 +1,6 @@
 # StyleUI / Notio
 
-Paycebo's native design adapts visual concepts from Notio: https://github.com/heyfabrika/styleui.
+Paycebo's original native design adapted visual concepts from Notio: https://github.com/heyfabrika/styleui. This attribution is retained after the green/light redesign.
 No Next.js or Base UI implementation is included.
 
 MIT License

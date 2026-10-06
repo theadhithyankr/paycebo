@@ -7,6 +7,7 @@ export interface Goal {
   name: string;
   targetPaise: number;
   imageUrl: string;
+  photoId?: string;
   color: string;
   weeklyPaise: number;
   dueDay: number; // ISO weekday, Monday = 1 and Sunday = 7.
@@ -31,25 +32,49 @@ export interface Reminder {
 }
 
 export interface SavingsState {
-  version: 1;
+  version: 2;
   bankBalancePaise: number;
   balanceUpdatedAt: string;
   tone: Tone;
   goals: Goal[];
   transactions: Transaction[];
   reminders: Reminder[];
+  allowances: Allowance[];
+  expenses: Expense[];
 }
+
+export type Frequency = "daily" | "weekly" | "monthly";
+export interface Allowance {
+  id: string;
+  name: string;
+  amountPaise: number;
+  frequency: Frequency;
+  color: string;
+  imageUrl: string;
+  photoId?: string;
+  createdAt: string;
+  archived: boolean;
+}
+export interface Expense {
+  id: string;
+  allowanceId: string;
+  amountPaise: number;
+  note: string;
+  createdAt: string;
+}
+export type AllowanceInput = Pick<Allowance, "name" | "amountPaise" | "frequency"> & Partial<Pick<Allowance, "color" | "imageUrl" | "photoId">>;
 
 export interface GoalInput {
   name: string;
   targetPaise: number;
   imageUrl?: string;
+  photoId?: string;
   color?: string;
   weeklyPaise?: number;
   dueDay?: number;
 }
 
-export const COLORS = ["#EDB780", "#B5C5E8", "#A9D6B2", "#D5B8E8", "#E9B7B0"] as const;
+export const COLORS = ["#398332", "#497BAC", "#31795B", "#8060A5", "#B25C64", "#EDB780", "#B5C5E8", "#A9D6B2", "#D5B8E8", "#E9B7B0"] as const;
 export const WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] as const;
 export const MAX_MONEY = 99_999_999_999;
 
@@ -88,7 +113,7 @@ function assertMoney(value: number, allowZero = false): void {
 
 export function emptyState(bankBalancePaise = 0, now = new Date()): SavingsState {
   assertMoney(bankBalancePaise, true);
-  return { version: 1, bankBalancePaise, balanceUpdatedAt: now.toISOString(), tone: "playful", goals: [], transactions: [], reminders: [] };
+  return { version: 2, bankBalancePaise, balanceUpdatedAt: now.toISOString(), tone: "playful", goals: [], transactions: [], reminders: [], allowances: [], expenses: [] };
 }
 
 export function savedFor(state: SavingsState, goalId: string): number {
@@ -100,8 +125,8 @@ export function totalSaved(state: SavingsState): number {
   return state.transactions.reduce((total, tx) => total + (tx.kind === "contribution" ? tx.amountPaise : -tx.amountPaise), 0);
 }
 
-export function safeToSpend(state: SavingsState): number {
-  return state.bankBalancePaise - totalSaved(state);
+export function safeToSpend(state: SavingsState, now = new Date()): number {
+  return state.bankBalancePaise - totalSaved(state) - totalAllowanceReserved(state, now);
 }
 
 export function progressFor(state: SavingsState, goal: Goal): number {
@@ -130,7 +155,8 @@ function goalValues(input: GoalInput, color: string): Omit<Goal, "id" | "created
     } catch { throw new Error("Use an https image URL, or leave it empty for initials."); }
   }
   if (!COLORS.includes(color as typeof COLORS[number])) throw new Error("Choose one of the goal colors.");
-  return { name, targetPaise: input.targetPaise, weeklyPaise, dueDay, imageUrl, color };
+  validatePhotoId(input.photoId);
+  return { name, targetPaise: input.targetPaise, weeklyPaise, dueDay, imageUrl, color, ...(input.photoId ? { photoId: input.photoId } : {}) };
 }
 
 export function addGoal(state: SavingsState, input: GoalInput, now = new Date(), id = createId()): SavingsState {
@@ -143,7 +169,9 @@ export function editGoal(state: SavingsState, id: string, input: GoalInput): Sav
   const goal = goalById(state, id);
   const values = goalValues(input, input.color ?? goal.color);
   if (values.targetPaise < savedFor(state, id)) throw new Error("The target cannot be lower than what you have saved. Request money back first.");
-  return { ...state, goals: state.goals.map((item) => item.id === id ? { ...goal, ...values } : item) };
+  const next = { ...goal, ...values };
+  if (!input.photoId) delete next.photoId;
+  return { ...state, goals: state.goals.map((item) => item.id === id ? next : item) };
 }
 
 export function updateBalance(state: SavingsState, balance: number, now = new Date()): SavingsState {
@@ -162,7 +190,7 @@ export function addTransaction(
   if (note.trim().length > 200) throw new Error("Keep your note to 200 characters.");
   const saved = savedFor(state, goalId);
   if (kind === "contribution") {
-    if (amountPaise > safeToSpend(state)) throw new Error("This exceeds your Safe to Spend balance. Update your balance or choose a smaller amount.");
+    if (amountPaise > safeToSpend(state, now)) throw new Error("This exceeds your Safe to Spend balance. Update your balance or choose a smaller amount.");
     if (amountPaise > goal.targetPaise - saved) throw new Error("This is more than the goal needs. Choose a smaller amount or edit the target.");
   } else if (amountPaise > saved) throw new Error("You can only request money already saved in this goal.");
   return { ...state, transactions: [...state.transactions, { id, goalId, kind, amountPaise, note: note.trim(), createdAt: now.toISOString() }] };
@@ -224,15 +252,80 @@ function validId(value: unknown): value is string {
   return typeof value === "string" && value.length > 0 && value.length <= 200;
 }
 
+export function validatePhotoId(value: unknown): void {
+  if (value !== undefined && (typeof value !== "string" || !/^[a-z0-9-]{1,100}\.jpg$/.test(value))) throw new Error("That photo reference is invalid. Choose the photo again.");
+}
+
+export function periodStart(frequency: Frequency, now: Date): Date {
+  if (frequency === "weekly") return weekStart(now);
+  const date = new Date(now); date.setHours(0, 0, 0, 0);
+  if (frequency === "monthly") date.setDate(1);
+  return date;
+}
+export function allowanceSpent(state: SavingsState, allowance: Allowance, now = new Date()): number {
+  const start = periodStart(allowance.frequency, now).getTime();
+  return state.expenses.reduce((sum, expense) => expense.allowanceId === allowance.id && Date.parse(expense.createdAt) >= start && Date.parse(expense.createdAt) <= now.getTime() ? sum + expense.amountPaise : sum, 0);
+}
+export function allowanceRemaining(state: SavingsState, allowance: Allowance, now = new Date()): number {
+  return allowance.archived ? 0 : Math.max(0, allowance.amountPaise - allowanceSpent(state, allowance, now));
+}
+export function totalAllowanceReserved(state: SavingsState, now = new Date()): number {
+  return state.allowances.reduce((sum, allowance) => sum + allowanceRemaining(state, allowance, now), 0);
+}
+function allowanceValues(input: AllowanceInput, color: string) {
+  // Share appearance validation with savings goals; retain the established legacy palette.
+  const appearance = goalValues({ name: input.name, targetPaise: input.amountPaise, imageUrl: input.imageUrl, photoId: input.photoId }, color);
+  if (!["daily", "weekly", "monthly"].includes(input.frequency)) throw new Error("Choose daily, weekly, or monthly.");
+  return { name: appearance.name, amountPaise: input.amountPaise, frequency: input.frequency, color: appearance.color, imageUrl: appearance.imageUrl, ...(appearance.photoId ? { photoId: appearance.photoId } : {}) };
+}
+function validateReservation(before: SavingsState, after: SavingsState, now: Date) {
+  if (safeToSpend(after, now) < Math.min(0, safeToSpend(before, now))) throw new Error("This allowance exceeds your available funds. Choose a smaller amount or update your balance.");
+  return after;
+}
+export function addAllowance(state: SavingsState, input: AllowanceInput, now = new Date(), id = createId()): SavingsState {
+  if (state.allowances.some((item) => item.id === id)) throw new Error("This allowance already exists.");
+  const allowance = { ...allowanceValues(input, input.color ?? COLORS[0]), id, createdAt: now.toISOString(), archived: false };
+  return validateReservation(state, { ...state, allowances: [...state.allowances, allowance] }, now);
+}
+export function allowanceById(state: SavingsState, id: string): Allowance {
+  const allowance = state.allowances.find((item) => item.id === id);
+  if (!allowance) throw new Error("This allowance is unavailable. Return home and choose another.");
+  return allowance;
+}
+export function editAllowance(state: SavingsState, id: string, input: AllowanceInput, now = new Date()): SavingsState {
+  const current = allowanceById(state, id);
+  if (current.archived) throw new Error("This allowance has been archived.");
+  const next = { ...current, ...allowanceValues(input, input.color ?? current.color) };
+  if (!input.photoId) delete next.photoId;
+  return validateReservation(state, { ...state, allowances: state.allowances.map((item) => item.id === id ? next : item) }, now);
+}
+export function archiveAllowance(state: SavingsState, id: string): SavingsState {
+  allowanceById(state, id);
+  return { ...state, allowances: state.allowances.map((item) => item.id === id ? { ...item, archived: true } : item) };
+}
+export function addExpense(state: SavingsState, allowanceId: string, amountPaise: number, note = "", confirmOverspend = false, now = new Date(), id = createId()): SavingsState {
+  const allowance = allowanceById(state, allowanceId);
+  if (allowance.archived) throw new Error("This allowance has been archived.");
+  assertMoney(amountPaise);
+  if (state.expenses.some((item) => item.id === id)) throw new Error("This expense was already recorded.");
+  if (amountPaise > state.bankBalancePaise) throw new Error("This exceeds your tracked bank balance. Update your balance first.");
+  if (note.trim().length > 200) throw new Error("Keep your note to 200 characters.");
+  if (amountPaise > allowanceRemaining(state, allowance, now) && !confirmOverspend) throw new Error("Confirm this over-budget expense before recording it.");
+  return { ...state, bankBalancePaise: state.bankBalancePaise - amountPaise, balanceUpdatedAt: now.toISOString(),
+    expenses: [...state.expenses, { id, allowanceId, amountPaise, note: note.trim(), createdAt: now.toISOString() }] };
+}
+
 /** Reject unknown/corrupt snapshots rather than silently overwriting personal data. */
 export function decodeState(raw: string): SavingsState {
   let value: unknown;
   try { value = JSON.parse(raw); } catch { throw new Error("Your saved data could not be read. It has been kept untouched."); }
-  if (!record(value) || value.version !== 1 || !validDate(value.balanceUpdatedAt)
+  if (!record(value) || (value.version !== 1 && value.version !== 2) || !validDate(value.balanceUpdatedAt)
     || (value.tone !== "playful" && value.tone !== "supportive")
     || !Array.isArray(value.goals) || !Array.isArray(value.transactions) || !Array.isArray(value.reminders)) {
     throw new Error("Your saved data uses an unsupported or unreadable format. It has been kept untouched.");
   }
+  if (value.version === 1) value = { ...value, version: 2, allowances: [], expenses: [] };
+  if (!record(value) || !Array.isArray(value.goals) || !Array.isArray(value.transactions) || !Array.isArray(value.reminders) || !Array.isArray(value.allowances) || !Array.isArray(value.expenses)) throw new Error("Your saved allowances could not be read. Your data has been kept untouched.");
   try {
     assertMoney(value.bankBalancePaise as number, true);
     const goals = new Map<string, Goal>();
@@ -271,8 +364,20 @@ export function decodeState(raw: string): SavingsState {
       reminderKeys.add(key);
       ids.add(reminder.id);
     }
+    const allowances = new Set<string>();
+    for (const item of value.allowances) {
+      if (!record(item) || !validId(item.id) || allowances.has(item.id) || !validDate(item.createdAt) || typeof item.archived !== "boolean"
+        || typeof item.name !== "string" || typeof item.amountPaise !== "number" || typeof item.color !== "string" || typeof item.imageUrl !== "string") throw new Error();
+      allowanceValues(item as unknown as AllowanceInput, item.color);
+      allowances.add(item.id);
+    }
+    for (const expense of value.expenses) {
+      if (!record(expense) || !validId(expense.id) || ids.has(expense.id) || typeof expense.allowanceId !== "string" || !allowances.has(expense.allowanceId)
+        || !validDate(expense.createdAt) || typeof expense.note !== "string" || expense.note.length > 200) throw new Error();
+      assertMoney(expense.amountPaise as number); ids.add(expense.id);
+    }
     const state = value as unknown as SavingsState;
-    if (!Number.isSafeInteger(totalSaved(state))) throw new Error();
+    if (!Number.isSafeInteger(totalSaved(state)) || !Number.isSafeInteger(totalAllowanceReserved(state)) || !Number.isSafeInteger(state.expenses.reduce((sum, item) => sum + item.amountPaise, 0))) throw new Error();
     return state;
   } catch { throw new Error("Your saved data contains invalid records. It has been kept untouched."); }
 }

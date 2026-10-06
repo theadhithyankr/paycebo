@@ -160,7 +160,7 @@ test("valid snapshots, including demo history, round-trip without balance drift"
 
 test("invalid and future snapshots are rejected rather than reset", () => {
   assert.throws(() => decodeState("{broken"));
-  assert.throws(() => decodeState(JSON.stringify({ ...fixture(), version: 2 })));
+  assert.throws(() => decodeState(JSON.stringify({ ...fixture(), version: 3 })));
   assert.throws(() => decodeState(JSON.stringify({ ...fixture(), bankBalancePaise: -1 })));
   assert.throws(() => decodeState(JSON.stringify({ ...fixture(), goals: [{ ...fixture().goals[0], imageUrl: 12 }] })));
   const paid = addTransaction(fixture(), "headset", "contribution", 100, "", monday, "t1");

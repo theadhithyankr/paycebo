@@ -5,13 +5,71 @@
     "scheme": "paycebo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "userInterfaceStyle": "dark",
+    "userInterfaceStyle": "light",
     "newArchEnabled": true,
-    "backgroundColor": "#0B0B0C",
-    "ios": { "supportsTablet": false, "bundleIdentifier": "app.paycebo.mobile" },
-    "android": { "package": "app.paycebo.mobile", "predictiveBackGestureEnabled": true },
-    "web": { "bundler": "metro", "output": "single", "name": "Paycebo", "themeColor": "#0B0B0C" },
-    "plugins": ["expo-router", "expo-font"],
-    "experiments": { "typedRoutes": true }
+    "backgroundColor": "#F4F5F1",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0B0B0C",
+      "dark": {
+        "backgroundColor": "#0B0B0C"
+      }
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "app.paycebo.mobile"
+    },
+    "android": {
+      "package": "app.paycebo.mobile",
+      "predictiveBackGestureEnabled": true,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0B0B0C"
+      },
+      "splash": {
+        "image": "./assets/splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#0B0B0C",
+        "dark": {
+          "backgroundColor": "#0B0B0C"
+        }
+      },
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.READ_MEDIA_VIDEO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single",
+      "name": "Paycebo",
+      "themeColor": "#0B0B0C"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Choose a photo for your savings goal or allowance.",
+          "cameraPermission": "Take a photo for your savings goal or allowance.",
+          "microphonePermission": false
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "92905564-cd6d-40b2-b178-34df5cefa904"
+      }
+    }
   }
 }

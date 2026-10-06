@@ -6,7 +6,7 @@
   *, *::before, *::after { scroll-behavior: auto !important; }
 }
 
-html, body, #root { min-height: 100%; background: #0B0B0C; }
-::selection { background: #EDB780; color: #17120D; }
-:focus-visible { outline: 2px solid #EDB780; outline-offset: 4px; }
-input, textarea { caret-color: #EDB780; }
+html, body, #root { min-height: 100%; background: #F4F5F1; }
+::selection { background: #86DB6E; color: #102015; }
+:focus-visible { outline: 2px solid #86DB6E; outline-offset: 4px; }
+input, textarea { caret-color: #86DB6E; }

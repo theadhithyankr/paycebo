@@ -1,13 +1,17 @@
 # Paycebo acceptance checks
 
-Run on an Android phone/emulator and an iPhone with dependencies installed. Capture native screenshots of Home, chat, payment, withdrawal confirmation, and setup. Include a large-text pass; browser screenshots are supplementary.
+Run on an Android phone/emulator and an iPhone with dependencies installed. Capture native screenshots of Home, setup, goal chat, payments, allowance details, expense confirmation, and photo selection. Include a large-text pass; browser screenshots are supplementary.
 
 ## First run and isolation
 
-1. Fresh storage opens the welcome screen. Start saving, enter a balance of 1000 and a goal target of 500, and complete setup. Home shows ₹1,000 available and no allocations.
+1. Fresh storage opens the welcome screen. Start setup: progress shows 20% for starting. Choose a goal, set a target of 500, enter a balance of 1000, and reserve 100. Progress advances to 40%, 60%, 80%, then 100% only after saving. Home shows ₹1,000 bank balance, ₹100 reserved, ₹900 Safe to Spend, and a 20% goal ring.
 2. In Settings, enter demo mode. Home displays the sample-data banner and sample balance breakdown.
 3. Modify demo data, then open personal savings. The original personal balance/goals are unchanged. Restart and confirm the last selected session returns.
 4. Demo → Make it yours resumes existing personal savings rather than recreating or resetting it.
+5. Repeat setup with “I’ll save later”: create one goal and no transactions. A zero balance also permits finishing with “Create my goal”.
+6. Close/restart during setup. Resume at the unfinished question with previous answers. Back navigation preserves inputs; changing the balance or target revalidates the first allocation.
+7. Double-tap the final action and retry failed snapshot/selector writes. Create one goal and at most one contribution; display no success until personal activation completes.
+8. Corrupt the separate setup draft. Retry reading or explicitly restart unfinished setup; preserve all personal/demo savings. An existing personal session takes precedence over any stale draft.
 
 ## Goal lifecycle
 
@@ -29,6 +33,17 @@ Run on an Android phone/emulator and an iPhone with dependencies installed. Capt
 6. Simulate storage write rejection: retain the form's amount/note, display a useful error, and publish no success or balance change. Retrying succeeds without duplicating a transaction.
 7. Provide corrupt/unsupported stored data: show the preserved-data error, and ensure demo or setup does not silently overwrite it.
 
+## Photos and allowances
+
+1. Choose a gallery image and take a camera photo for both a goal and an allowance. Confirm the circular preview, save, restart, and verify persistence. JPEG output has a longest edge no greater than 1,024 pixels.
+2. Cancel selection, deny camera permission, or remove/replace an image. Cancel/denial preserves the previous image; removal uses initials. Existing HTTPS images remain valid. Missing local images also use initials.
+3. Fail photo/snapshot writes and retry. Keep the selected image and form values. Dismiss during a save: cleanup waits for the write and never deletes the newly referenced file or a file referenced by the other session.
+4. Set bank balance to ₹1,000, reserve ₹100 for food, and record ₹30 spending. Verify bank ₹970, allowance ₹70, and Safe to Spend ₹900. Savings allocations remain unchanged.
+5. Record ₹120 more. Confirm the over-budget dialog before committing; bank becomes ₹850 and the allowance shows ₹50 overspent. Spending beyond the tracked bank balance is rejected.
+6. Check local midnight, Monday, month/year boundaries, foregrounding after a missed reset, and keeping the app open at midnight. No rollover or synthetic deposits/transactions appear.
+7. Edit frequency/amount and verify the current-period reservation preview. Reservations cannot worsen a deficit. Archive an allowance: release its remaining reservation and retain all expenses in Activity.
+8. Restore a version 1 snapshot: verify unchanged money/history and empty allowances/expenses. Only a subsequent successful write changes the stored snapshot to version 2. Corrupt snapshots remain protected.
+
 ## Reminders and tone
 
 1. With a pledge due today and no weekly contributions, open the app/chat. One dated reminder appears with the correct remaining amount.
@@ -45,11 +60,13 @@ Run on an Android phone/emulator and an iPhone with dependencies installed. Capt
 - Verify hardware/system Back, iPhone edge-swipe, modal Close, and Android confirmation Back cancellation.
 - Confirm screen readers announce goal progress, button labels, disabled states, and form errors.
 - Enable Reduce Motion/Remove animations. Progress updates without the ring animation.
-- Check Home, goal chat, both payment types, completion, filters, Settings, and empty/error screens in dark mode.
+- Check green/dark headers and light forms, goal chat, both payment types, allowance details, expense confirmation, completion, filters, Settings, and empty/error screens.
 
 ## Current verification boundary
 
-Automated domain/storage checks passed. App rendering, native accessibility, production bundling, and full app typecheck have not been run because package downloads were blocked. These scenarios are acceptance instructions, not claims of executed UI checks.
+50 automated domain/storage/onboarding/allowance tests, full app typecheck, source parsing, and Expo exports for Android/iOS/web passed. Production-browser walkthroughs at 390×844, 320×640, and 1280×900 passed for onboarding/resume, funded setup, expense arithmetic and overspending, photo import/restart/removal, Activity, editing/archival, and compact custom-goal/zero-balance completion. Screenshots under `.impeccable/review/` supplement native QA. Expo configuration introspection confirms camera usage descriptions and removal directives for broad photo-library and microphone permissions.
+
+Native accessibility, keyboard behavior, OS Back/predictive gestures, system font scaling, and iOS swipe behavior still need device testing. The local Android emulator could not create its lock file; no device was attached. iOS Simulator is unavailable on Windows. No user retention or usability measurement has been performed.
 
 Source review disposition: **fix** — runtime verification remains open.
 
@@ -59,5 +76,6 @@ Source review disposition: **fix** — runtime verification remains open.
 | Long button label wrapping | Resolved in source |
 | Activity summary wrapping | Resolved in source |
 | Withdrawal dialog containment | Resolved in source |
-| Native execution and visual verification | Unresolved: dependencies/device unavailable |
-| Full app typecheck and export | Unresolved: dependencies unavailable |
+| Native execution and visual verification | Unresolved: emulator lock-file access failure; no attached device |
+| Full app typecheck and export | Passed for Android, iOS, and web |
+| Onboarding browser walkthrough and compact-screen inspection | Passed; supplementary to native QA |

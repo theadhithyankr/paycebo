@@ -1,61 +1,44 @@
-﻿---
+---
 name: Paycebo
-description: Warm dark native savings, with goals that feel like contacts.
+description: Green finance planning with dark headers, light panels and personal contacts.
 colors:
-  background: "#0B0B0C"
-  surface: "#181819"
-  elevated: "#222223"
-  foreground: "#F5F2EC"
-  muted: "#B2AFA9"
-  accent: "#EDB780"
-  accent-ink: "#17120D"
-  line: "#343332"
-  positive: "#A9D6B2"
-  danger: "#FFB1A5"
-  danger-surface: "#35201D"
-  contribution-surface: "#252C25"
-  withdrawal-surface: "#35241F"
-  hero-start: "#211A15"
-  hero-middle: "#2A211A"
-  hero-end: "#443024"
-  hero-muted: "#DEC8B6"
-  hero-line: "#6B5140"
-  demo-surface: "#292119"
-  goal-blue: "#B5C5E8"
-  goal-lilac: "#D5B8E8"
-  goal-rose: "#E9B7B0"
+  background: "#F4F5F1"
+  surface: "#FFFFFF"
+  elevated: "#E9EDE5"
+  foreground: "#17221A"
+  muted: "#5D675F"
+  accent: "#86DB6E"
+  accent-ink: "#102015"
+  accent-text: "#257338"
+  dark: "#0B1711"
+  on-dark: "#F6F8F3"
+  dark-muted: "#C4D6C4"
+  line: "#D8DFD3"
+  positive: "#257338"
+  danger: "#A42E38"
+  danger-surface: "#FCE9E9"
+  contribution-surface: "#E2EEDD"
 typography:
   display:
-    fontFamily: "Aleo_400Regular, Georgia, serif"
+    fontFamily: "Manrope_700Bold, Manrope, sans-serif"
     fontSize: "30px"
-    fontWeight: 400
+    fontWeight: 700
     lineHeight: 1.266667
     letterSpacing: "-0.5px"
-  section:
-    fontFamily: "Aleo_400Regular, Georgia, serif"
-    fontSize: "25px"
-    fontWeight: 400
-    lineHeight: 1.28
-  balance:
-    fontFamily: "system-ui, sans-serif"
-    fontSize: "52px"
-    fontWeight: 600
-    lineHeight: 1.230769
-    letterSpacing: "-1.2px"
   body:
-    fontFamily: "system-ui, sans-serif"
+    fontFamily: "Manrope_400Regular, Manrope, sans-serif"
     fontSize: "16px"
     lineHeight: 1.5
   supporting:
-    fontFamily: "system-ui, sans-serif"
+    fontFamily: "Manrope_400Regular, Manrope, sans-serif"
     fontSize: "14px"
     lineHeight: 1.5
   label:
-    fontFamily: "system-ui, sans-serif"
+    fontFamily: "Manrope_400Regular, Manrope, sans-serif"
     fontSize: "13px"
     lineHeight: 1.461538
   button:
-    fontFamily: "system-ui, sans-serif"
+    fontFamily: "Manrope_400Regular, Manrope, sans-serif"
     fontSize: "16px"
     fontWeight: 600
     lineHeight: 1.5
@@ -67,7 +50,8 @@ rounded:
   chat-tail: "4px"
   banner: "12px"
   control: "16px"
-  hero: "28px"
+  dialog: "24px"
+  panel: "28px"
   circle: "9999px"
 spacing:
   xs: "4px"
@@ -116,10 +100,21 @@ components:
     typography: "{typography.supporting}"
     rounded: "{rounded.control}"
     padding: "16px"
-  balance-hero:
+  allowance-card:
+    backgroundColor: "{colors.surface}"
     textColor: "{colors.foreground}"
-    rounded: "{rounded.hero}"
-    padding: "24px"
+    rounded: "{rounded.control}"
+    padding: "16px"
+  frequency-chip:
+    backgroundColor: "{colors.elevated}"
+    textColor: "{colors.foreground}"
+    rounded: "{rounded.control}"
+    padding: "12px 20px"
+  frequency-chip-selected:
+    backgroundColor: "{colors.accent}"
+    textColor: "{colors.foreground}"
+    rounded: "{rounded.control}"
+    padding: "12px 20px"
   navigation:
     backgroundColor: "{colors.background}"
     textColor: "{colors.muted}"
@@ -132,93 +127,116 @@ components:
 
 ## Overview
 
-**Creative North Star: "Warm dark savings, paid to your future."**
+**Creative North Star: "Personal money plans as contacts."**
 
-Paycebo adapts the chosen Notio world to native payment-app interactions. Warm amber, curved surfaces, a quiet serif and contact avatars make saving tangible. The balance is prominent; goals and ledgers feel personal and conversational. This describes the approved direction, rather than a new concept.
+Paycebo presents future goals and everyday allowances as personal contacts. The user-approved green finance reference supplies the visual world: dark green balance headers, rounded light panels, Manrope and green controls. Calm amounts, clear labels and one focused action per task support everyday money planning. This replaces the former Notio, amber, serif and dark-only direction.
 
-Visual authority: StyleUI Notio registry in `heyfabrika/styleui`, inspected at commit `3da5706548882038f448a8ff4e570680a06b25c4`; dark sunny palette, Aleo serif, large rounded hero and restrained tonal gradients. Attribution lives in `THIRD_PARTY_NOTICES.md`. Actual source controls this adaptation: `src/components/ui.tsx`, `src/components/GoalAvatar.tsx`, `tailwind.config.js`, `app/(tabs)/index.tsx`, `app/(tabs)/_layout.tsx`, `app/goal/[id].tsx`, `src/components/TransactionRow.tsx`, `src/lib/model.ts` and `app/_layout.tsx`. Frontmatter pixels represent React Native logical units; system font names describe platform defaults.
+The shipped source is authoritative: `app/_layout.tsx` records direction seed `f7815d43`; `src/components/ui.tsx`, `primitives.tsx`, `OnboardingFrame.tsx`, `GoalAvatar.tsx`, `PhotoControl.tsx`, `tailwind.config.js` and the Home, allowance, expense and goal routes establish these patterns. Owned gluestack primitives are manually integrated with NativeWind 4. Frontmatter pixels represent React Native logical units. Display/body font fallbacks handle loading failure; input typography still uses the platform default.
 
-Verification boundary: dependency installation was blocked by npm registry network `EACCES`. Native rendering, screenshots, full application typecheck and Expo export are unverified; no UI signoff is claimed. Source defects in setup read retry, button label shrinking, Activity wrapping and confirmation scrolling are resolved. Review disposition remains **fix**, solely pending native rendering/full application typecheck/export verification.
+Verification boundary: reported browser walkthroughs and captures cover phone, compact and wide Home, welcome/setup, allowances, overspending, photo choice, activity, settings and goal chat. The reported 50 domain/storage tests, full typecheck and Android/iOS/web exports pass. Native UI captures and comparison with the native QUALITY BAR remain unverified: no attached adb device was available and emulator lock access failed. Camera, native keyboard, gestures and OS text scaling require device checks. No HTML/CSS detector ran because this is an adaptive native target. Browser evidence, exports and sidecar previews do not establish native UI signoff.
 
 **Key Characteristics:**
-- Warm amber actions on near-black tonal surfaces.
-- Aleo headings with native sans controls and currency.
-- Circular goal contacts with explicit progress.
-- Flat ledger rows and conversational transaction bubbles.
-- Scalable text, safe areas and keyboard-safe forms.
+
+- Dark green headers above rounded light working surfaces.
+- Manrope headings and body copy with clear INR amounts.
+- Green rounded actions and explicit selected controls.
+- Circular goal and allowance contacts with photo or initials fallback.
+- Flat activity rows, conversational savings and restrained semantic tints.
+- Safe areas, scalable text, reduced motion and keyboard-safe forms.
 
 ## Colors
 
-The palette is dark and sunny. Exact values live in frontmatter.
+Forest-dark emphasis, softly green light surfaces and a bright green action accent form the palette; frontmatter owns exact shared values.
 
 ### Primary
-Warm amber identifies actions, active tabs and marks. Amber ink is used on filled actions.
+
+Bright leaf green marks primary actions, setup progress and selected options. Deep green accent text supports small actions on light surfaces; dark ink keeps filled green controls legible. Forest dark supports balance/onboarding headers with pale foreground and muted green copy.
 
 ### Secondary
-Contribution green marks saved allocations. Request salmon marks withdrawals, negative availability and errors. Goal blue, lilac and rose join amber and green in the selectable identity palette.
+
+Positive green and pale contribution tint mark saved allocations. Deep red and pale danger tint mark withdrawals, errors and overspending. Contact identity colors are defined separately in `COLORS` in `src/lib/model.ts`: current choices are green, blue, forest, lavender and rose; older colors remain valid for saved data. Identity colors are not alternate global action palettes.
 
 ### Neutral
-Near-black is the page; charcoal is the notice surface; elevated charcoal is the input/control layer. Warm chalk carries main text, warm gray supporting text and charcoal line separators. Hero start/middle/end form the diagonal balance gradient; hero muted and hero line serve its labels and divider. Danger, contribution, withdrawal and demo surfaces provide contextual tints.
+
+Soft off-white is the page, white is the card/notice layer and pale green-gray is the field/control layer. Dark green-black carries main text, muted gray-green supporting copy and pale green-gray lines separate rows.
 
 **The Meaning Before Color Rule.** Transaction meaning, errors and demo mode need words or icons as well as tint.
 
 ## Typography
 
-**Display Font:** Aleo regular (`Aleo_400Regular`), with implemented Georgia fallback on iOS/web and native serif on Android. Aleo bold is loaded and registered; shared Display uses regular.
+**Display Font:** Manrope bold (`Manrope_700Bold`). **Body Font:** Manrope regular (`Manrope_400Regular`). Font-loading failure permits platform fallback. Inputs, avatar initials and native tab labels currently use platform fonts; do not infer an additional editorial typeface from these exceptions.
 
-**Body Font:** Native platform sans. Currency uses tabular numerals. Text scaling stays enabled.
+The hierarchy is operational: bold screen headings, quieter explanations and prominent amounts. Shared display is (30/38), form headings (26/34), Home section headings (23/32) and savings chat summary (34/44). Home balance is (44/54), shrinking to (36/54) when its formatted amount exceeds ten characters. Body is (16/24), supporting text (14/21), hints (13/19), fields (17/24). Metadata may use (11-12) with (16-18) line height. Text scaling stays enabled.
 
-Shared display is (30/38), home section headings (25/32), form headings (26/34) and chat savings heading (34/44). Main sans balance is (52/64); beyond nine characters it becomes (42/64), beyond twelve (34/44). Body is (16/24), supporting text (14/21), hints (13/19), fields (17/24). Dates use (11–12) text with (16–18) line height.
-
-**The Amount Clarity Rule.** Preserve Indian currency grouping, tabular digits and the source's adaptive balance sizing.
+**The Amount Clarity Rule.** Preserve Indian currency grouping, tabular digits where implemented and the source's adaptive balance sizing.
 
 ## Layout
 
-Phone-first vertical screens sit in a centered container capped at (640). Pages use (24) horizontal padding and (28) bottom padding. Forms use (24) padding/gaps and (40) bottom padding. Safe areas and scrolling handle native chrome and keyboards; iOS forms use keyboard avoidance. No custom responsive breakpoints are defined.
+Phone-first vertical screens sit in a centered container capped at (640). There are no custom responsive breakpoints: larger web widths retain the narrow working column. Pages use (24) horizontal padding and (28) bottom padding; forms use (24) padding/gaps and (40) bottom padding. Safe areas and scrolling handle device chrome. FormPage uses iOS keyboard avoidance; onboarding uses padding on iOS and height elsewhere.
 
-Most rhythm uses the frontmatter scale, with observed local exceptions: balance gaps (14), contact gaps (18). Home contacts occupy (88)-wide horizontal rail items. Ledger rows span the width. Chat bubbles occupy at most (90%); outgoing messages have (170) minimum width. Bottom chat actions wrap when needed.
+Home places balance and three quick actions in a dark green header. Its light working panel has broad top corners and a small overlap into the header. Future contacts form a horizontal rail with (86)-wide items, (72)-unit avatars and (18) gaps. Allowances stack as white rows; recent activity uses divided ledger rows. Header totals wrap. Chat bubbles occupy at most (90%) width; outgoing messages have (170) minimum width and bottom actions wrap.
+
+Onboarding has a dark progress header, scrolling light question area and separate keyboard-safe footer. Each question has minimal copy and an explicit forward action. Dialog bodies scroll within maximum (85%) viewport height and (440) width; sheets respect the bottom safe area.
 
 ## Elevation & Depth
 
-Tonal surfaces and the balance gradient supply depth. The source defines no shadows. Fields use elevated tone, transaction bubbles use semantic tints, and thin dividers clarify list structure.
+There are no custom shadows. Depth comes from dark/light contrast, white cards on the off-white panel, semantic tints and thin separators. Home uses a restrained forest gradient and translucent header controls. Overlay backdrops use dark green at (55%) opacity; sheets and dialogs use light surfaces.
 
-**The Tonal Depth Rule.** Extend tonal layering and reserve the warm gradient for balance emphasis; do not add shadow stacks.
+**The Tonal Depth Rule.** Use tonal surfaces, restrained header gradients and dividers before adding elevation effects.
 
 ## Shapes
 
-The hero uses the broad hero radius. Controls, notices and bubbles use control radius; incoming bubbles tighten the upper-left corner and outgoing bubbles the upper-right to chat-tail radius. Demo labels use banner radius. Circular clipped goal images/initials have a (3)-unit progress ring; new-goal circles use a dashed outline.
+Controls, fields, allowance cards, notices and bubbles share rounded control corners. Light panel tops and sheets use broad panel radius; dialogs use dialog radius. Incoming bubbles tighten the upper-left corner and outgoing bubbles the upper-right to chat-tail radius. Demo banners use banner radius. Goal images and initials are circular/clipped, with a (3)-unit progress ring starting at the top and rounded stroke ends.
 
 ## Components
 
 ### Buttons
-Four native variants: primary, secondary, ghost and danger. Minimum height (52), padding (12 vertical, 20 horizontal), centered icon/label group, shrinking labels. Pressed opacity (0.75); disabled opacity (0.45). Saving disables action and shows a spinner plus Saving text. Icon buttons have (48) square hit areas and tonal pressed background. Native source has no custom hover/focus decoration; sidecar focus outlines are browser preview affordances only.
+
+Owned gluestack actions expose primary, secondary, ghost and danger variants. Minimum height (52), padding (12 vertical, 20 horizontal), centered icon/label group and shrinking labels preserve readability. Pressed opacity is (0.75); disabled opacity (0.45). Saving disables the action and shows a spinner with saving copy. Icon buttons have (48) square hit areas and tonal pressed background. Dark-surface ghost labels use pale text. Native source has no custom hover/focus decoration; sidecar focus outlines are browser preview affordances only.
 
 ### Cards / Containers
-Balance hero uses the three-stop diagonal gradient, hero radius and (24) padding. Notices/nudges use surface tone, control radius and (16) padding. Errors use danger-surface and salmon with live announcements. Demo banner explicitly labels sample money.
+
+White allowance cards use control radius and (16) padding. Allowance summaries use (24) padding and prominent remaining/over-budget amounts. Quiet notices explain allocation/storage behavior; errors use pale danger tint with alert/live announcement. The demo banner explicitly labels sample money. Avoid nesting decorative cards inside activity rows.
 
 ### Inputs / Fields
-Elevated fields have minimum height (56), control radius and (16) padding. Warm chalk text, muted placeholder, amber selection; labels/hints remain outside. Separate error notices retain user input on persistence failures. Source adds no custom focus border.
 
-### Navigation
-Native stacks open goal chats; editing/payment tasks use modal presentation. Home, Activity and Settings tabs use (12)-unit labels, amber active state, muted inactive state and top divider. Height is (64) plus the greater of bottom safe-area inset and (12), with (10) top padding. Back/close controls have accessible labels.
+Fields have pale elevated backgrounds, control radius, (16) padding and minimum height (56). Labels/hints remain outside. Dark text, muted placeholders and green selection support editing. Persistence errors are separate notices and preserve input. Source adds no custom focus border.
 
-### Goal contacts and progress
-Default avatar (76); ledger (48), chat header (44), summary (100). Missing/failed images show up to two uppercase initials over goal color at hexadecimal alpha `25`. The (3)-unit ring starts at top with rounded ends. Progress animates over (350 ms), or (0 ms) for reduced motion; initial preference defaults to reduced motion. Names and percentages make progress explicit.
+### Chips
+
+Daily, weekly and monthly allowance choices wrap in a row. Each has minimum height (48), control radius and (12 vertical, 20 horizontal) padding. Selected chips use green; others use elevated tone. Accessibility state exposes selection and disabled status.
+
+### Navigation and overlays
+
+Home, Activity and Settings tabs sit on the light background with a top divider and (12/18) labels. The active icon sits in a dark circular pill with a pale icon; active label tint is dark. Inactive icons/labels are muted. Height is (76) plus the greater of bottom safe-area inset and (12), with (10) top padding. Back/close controls have accessible labels; edit/payment/expense forms use modal presentation. Owned gluestack dialogs and action sheets supply overlay behavior.
+
+### Goal contacts, allowances and photos
+
+Default avatar (76), Home contacts (72), Home allowances (52), allowance preview (88), allowance detail (96), ledger (48), chat header (44) and goal summary (100). Missing/failed images show up to two uppercase initials over goal color at hexadecimal alpha `25`. Names, percentages or remaining-money labels make meaning explicit: goals track saved progress; allowance rings track current-period spending. Native progress animates over (350 ms), or immediately for reduced motion; web rings are static. Initial reduced-motion preference defaults to true.
+
+Photo controls open a light sheet with gallery, camera and removal actions. Actionable permission/error copy offers native Settings after camera denial. New photos are resized to at most (1024) on the long edge and stored as JPEG at (0.8) compression. Persistence is local, not a cloud feature. Retain initials fallback and accessible names.
 
 ### Ledger and conversation
-Ledger rows have bottom dividers and (16) vertical padding. Incoming goal/reminder messages align left on surface. Contributions and withdrawals align right on their tints. Status words, arrows, checks, dates and tabular amounts support meaning. Conversation scrolls to newest content when item count changes without an animated jump.
+
+Divided ledger rows use (16) vertical padding. Incoming goal/reminder messages align left on white; contributions and withdrawals align right on green/red tints. Status words, arrows, checks, dates and tabular amounts explain meaning. Conversation scrolls to newest content when item count changes without an animated jump. Allowance history retains expenses after archival; overspending requires explicit confirmation.
+
+### First-run onboarding
+
+Four questions cover goal, target, manually entered balance and optional first allocation. Setup progress starts at (20%), then advances through (40%), (60%), (80%) and (100%) after successful persistence; it is distinct from savings progress. Back preserves inputs and a local draft restores interrupted setup. Content fades over (220 ms), progress transitions over (300 ms); reduced motion makes both immediate. Completion displays a green check, committed goal/amount and actual Safe to Spend. No automatic question advances or mandatory first allocations.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** keep amber actions, Aleo headings and native sans operational text consistent.
+
+- **Do** preserve dark green headers, rounded light surfaces, Manrope and green actions.
 - **Do** preserve safe areas, scalable text, minimum 48-unit controls and keyboard-safe forms.
 - **Do** pair transaction color with words and label demo money explicitly.
-- **Do** use tonal surfaces, the warm balance gradient and flat divided ledger rows.
+- **Do** use tonal surfaces and flat divided activity rows.
 - **Do** retain reduced-motion handling and image-to-initials fallbacks.
 
 ### Don't:
-- **Don't** imply bank connectivity or money transfer through visuals or labels.
-- **Don't** replace the chosen dark Notio world with a new identity.
+
+- **Don't** imply bank connectivity, real money transfers or cloud photo uploads through visuals or labels.
+- **Don't** reintroduce the discarded Notio, amber-action, serif or dark-only identity.
 - **Don't** add decorative shadow stacks or nested cards to ledger rows.
-- **Don't** treat source inspection or sidecar previews as native UI signoff.
+- **Don't** treat browser walkthroughs, exports or sidecar previews as native UI signoff.

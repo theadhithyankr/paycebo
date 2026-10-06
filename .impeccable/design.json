@@ -1,1 +1,397 @@
-{"schemaVersion":2,"generatedAt":"2026-10-05T08:44:39.741339+00:00","title":"Design System: Paycebo","extensions":{"colorMeta":{"background":{"role":"neutral","displayName":"Background","tonalRamp":["oklch(15% 0.00212 286.14)","oklch(26% 0.00212 286.14)","oklch(38% 0.00212 286.14)","oklch(49% 0.00212 286.14)","oklch(61% 0.00212 286.14)","oklch(72% 0.00212 286.14)","oklch(84% 0.00212 286.14)","oklch(95% 0.00212 286.14)"]},"surface":{"role":"neutral","displayName":"Surface","tonalRamp":["oklch(15% 0.00195 286.23)","oklch(26% 0.00195 286.23)","oklch(38% 0.00195 286.23)","oklch(49% 0.00195 286.23)","oklch(61% 0.00195 286.23)","oklch(72% 0.00195 286.23)","oklch(84% 0.00195 286.23)","oklch(95% 0.00195 286.23)"]},"elevated":{"role":"neutral","displayName":"Elevated","tonalRamp":["oklch(15% 0.00186 286.27)","oklch(26% 0.00186 286.27)","oklch(38% 0.00186 286.27)","oklch(49% 0.00186 286.27)","oklch(61% 0.00186 286.27)","oklch(72% 0.00186 286.27)","oklch(84% 0.00186 286.27)","oklch(95% 0.00186 286.27)"]},"foreground":{"role":"neutral","displayName":"Foreground","tonalRamp":["oklch(15% 0.00860 84.57)","oklch(26% 0.00860 84.57)","oklch(38% 0.00860 84.57)","oklch(49% 0.00860 84.57)","oklch(61% 0.00860 84.57)","oklch(72% 0.00860 84.57)","oklch(84% 0.00860 84.57)","oklch(95% 0.00860 84.57)"]},"muted":{"role":"neutral","displayName":"Muted","tonalRamp":["oklch(15% 0.00913 84.58)","oklch(26% 0.00913 84.58)","oklch(38% 0.00913 84.58)","oklch(49% 0.00913 84.58)","oklch(61% 0.00913 84.58)","oklch(72% 0.00913 84.58)","oklch(84% 0.00913 84.58)","oklch(95% 0.00913 84.58)"]},"accent":{"role":"primary","displayName":"Accent","tonalRamp":["oklch(15% 0.09471 66.36)","oklch(26% 0.09471 66.36)","oklch(38% 0.09471 66.36)","oklch(49% 0.09471 66.36)","oklch(61% 0.09471 66.36)","oklch(72% 0.09471 66.36)","oklch(84% 0.09471 66.36)","oklch(95% 0.09471 66.36)"]},"accent-ink":{"role":"neutral","displayName":"Accent Ink","tonalRamp":["oklch(15% 0.01280 66.91)","oklch(26% 0.01280 66.91)","oklch(38% 0.01280 66.91)","oklch(49% 0.01280 66.91)","oklch(61% 0.01280 66.91)","oklch(72% 0.01280 66.91)","oklch(84% 0.01280 66.91)","oklch(95% 0.01280 66.91)"]},"line":{"role":"neutral","displayName":"Line","tonalRamp":["oklch(15% 0.00226 67.74)","oklch(26% 0.00226 67.74)","oklch(38% 0.00226 67.74)","oklch(49% 0.00226 67.74)","oklch(61% 0.00226 67.74)","oklch(72% 0.00226 67.74)","oklch(84% 0.00226 67.74)","oklch(95% 0.00226 67.74)"]},"positive":{"role":"secondary","displayName":"Positive","tonalRamp":["oklch(15% 0.06868 150.69)","oklch(26% 0.06868 150.69)","oklch(38% 0.06868 150.69)","oklch(49% 0.06868 150.69)","oklch(61% 0.06868 150.69)","oklch(72% 0.06868 150.69)","oklch(84% 0.06868 150.69)","oklch(95% 0.06868 150.69)"]},"danger":{"role":"secondary","displayName":"Danger","tonalRamp":["oklch(15% 0.09361 28.92)","oklch(26% 0.09361 28.92)","oklch(38% 0.09361 28.92)","oklch(49% 0.09361 28.92)","oklch(61% 0.09361 28.92)","oklch(72% 0.09361 28.92)","oklch(84% 0.09361 28.92)","oklch(95% 0.09361 28.92)"]},"danger-surface":{"role":"neutral","displayName":"Danger Surface","tonalRamp":["oklch(15% 0.03343 28.40)","oklch(26% 0.03343 28.40)","oklch(38% 0.03343 28.40)","oklch(49% 0.03343 28.40)","oklch(61% 0.03343 28.40)","oklch(72% 0.03343 28.40)","oklch(84% 0.03343 28.40)","oklch(95% 0.03343 28.40)"]},"contribution-surface":{"role":"neutral","displayName":"Contribution Surface","tonalRamp":["oklch(15% 0.01599 145.14)","oklch(26% 0.01599 145.14)","oklch(38% 0.01599 145.14)","oklch(49% 0.01599 145.14)","oklch(61% 0.01599 145.14)","oklch(72% 0.01599 145.14)","oklch(84% 0.01599 145.14)","oklch(95% 0.01599 145.14)"]},"withdrawal-surface":{"role":"neutral","displayName":"Withdrawal Surface","tonalRamp":["oklch(15% 0.02774 37.04)","oklch(26% 0.02774 37.04)","oklch(38% 0.02774 37.04)","oklch(49% 0.02774 37.04)","oklch(61% 0.02774 37.04)","oklch(72% 0.02774 37.04)","oklch(84% 0.02774 37.04)","oklch(95% 0.02774 37.04)"]},"hero-start":{"role":"neutral","displayName":"Hero Start","tonalRamp":["oklch(15% 0.01459 57.43)","oklch(26% 0.01459 57.43)","oklch(38% 0.01459 57.43)","oklch(49% 0.01459 57.43)","oklch(61% 0.01459 57.43)","oklch(72% 0.01459 57.43)","oklch(84% 0.01459 57.43)","oklch(95% 0.01459 57.43)"]},"hero-middle":{"role":"neutral","displayName":"Hero Middle","tonalRamp":["oklch(15% 0.01879 59.68)","oklch(26% 0.01879 59.68)","oklch(38% 0.01879 59.68)","oklch(49% 0.01879 59.68)","oklch(61% 0.01879 59.68)","oklch(72% 0.01879 59.68)","oklch(84% 0.01879 59.68)","oklch(95% 0.01879 59.68)"]},"hero-end":{"role":"neutral","displayName":"Hero End","tonalRamp":["oklch(15% 0.03566 52.07)","oklch(26% 0.03566 52.07)","oklch(38% 0.03566 52.07)","oklch(49% 0.03566 52.07)","oklch(61% 0.03566 52.07)","oklch(72% 0.03566 52.07)","oklch(84% 0.03566 52.07)","oklch(95% 0.03566 52.07)"]},"hero-muted":{"role":"neutral","displayName":"Hero Muted","tonalRamp":["oklch(15% 0.03492 61.63)","oklch(26% 0.03492 61.63)","oklch(38% 0.03492 61.63)","oklch(49% 0.03492 61.63)","oklch(61% 0.03492 61.63)","oklch(72% 0.03492 61.63)","oklch(84% 0.03492 61.63)","oklch(95% 0.03492 61.63)"]},"hero-line":{"role":"neutral","displayName":"Hero Line","tonalRamp":["oklch(15% 0.04387 54.52)","oklch(26% 0.04387 54.52)","oklch(38% 0.04387 54.52)","oklch(49% 0.04387 54.52)","oklch(61% 0.04387 54.52)","oklch(72% 0.04387 54.52)","oklch(84% 0.04387 54.52)","oklch(95% 0.04387 54.52)"]},"demo-surface":{"role":"neutral","displayName":"Demo Surface","tonalRamp":["oklch(15% 0.01892 66.80)","oklch(26% 0.01892 66.80)","oklch(38% 0.01892 66.80)","oklch(49% 0.01892 66.80)","oklch(61% 0.01892 66.80)","oklch(72% 0.01892 66.80)","oklch(84% 0.01892 66.80)","oklch(95% 0.01892 66.80)"]},"goal-blue":{"role":"secondary","displayName":"Goal Blue","tonalRamp":["oklch(15% 0.05240 265.84)","oklch(26% 0.05240 265.84)","oklch(38% 0.05240 265.84)","oklch(49% 0.05240 265.84)","oklch(61% 0.05240 265.84)","oklch(72% 0.05240 265.84)","oklch(84% 0.05240 265.84)","oklch(95% 0.05240 265.84)"]},"goal-lilac":{"role":"secondary","displayName":"Goal Lilac","tonalRamp":["oklch(15% 0.07303 311.87)","oklch(26% 0.07303 311.87)","oklch(38% 0.07303 311.87)","oklch(49% 0.07303 311.87)","oklch(61% 0.07303 311.87)","oklch(72% 0.07303 311.87)","oklch(84% 0.07303 311.87)","oklch(95% 0.07303 311.87)"]},"goal-rose":{"role":"secondary","displayName":"Goal Rose","tonalRamp":["oklch(15% 0.05914 27.59)","oklch(26% 0.05914 27.59)","oklch(38% 0.05914 27.59)","oklch(49% 0.05914 27.59)","oklch(61% 0.05914 27.59)","oklch(72% 0.05914 27.59)","oklch(84% 0.05914 27.59)","oklch(95% 0.05914 27.59)"]}},"typographyMeta":{"display":{"displayName":"Aleo Display","purpose":"Screen and section headings; portable snippets do not bundle fonts."},"balance":{"displayName":"Native Sans Balance","purpose":"Prominent INR amounts with adaptive source sizing."}},"shadows":[],"motion":[{"name":"goal-progress","value":"350ms; 0ms when reduced motion is enabled","purpose":"Native ring animation; reduced motion defaults true until read."},{"name":"pressed-opacity","value":"0.75","purpose":"Button pressed feedback."}],"breakpoints":[],"verification":{"authority":"Implemented React Native source and Notio registry commit 3da5706548882038f448a8ff4e570680a06b25c4","status":"Source-only; npm registry EACCES blocked dependency installation. No native rendering, screenshots, full application typecheck, Expo export or UI signoff.","reviewDisposition":"fix solely pending native rendering/full application typecheck/export verification; source defects resolved.","previewBoundary":"HTML/CSS translations show native primitives approximately; browser focus/hover affordances are not native source behavior.","tonalRampBoundary":"Synthetic OKLCH panel ramps; not implemented application tokens."}},"components":[{"name":"Primary button","kind":"button","refersTo":"button-primary","description":"Native variant translated for preview; focus outline is browser-only.","html":"<button class=\"ds-button-primary\">Pay your goal</button>","css":".ds-button-primary{min-height:52px;padding:12px 20px;border:0;border-radius:16px;font:600 16px/24px system-ui,sans-serif;cursor:pointer;background:#EDB780;color:#17120D;} .ds-button-primary:hover{opacity:.9} .ds-button-primary:active{opacity:.75} .ds-button-primary:disabled{opacity:.45;cursor:default} .ds-button-primary:focus-visible{outline:2px solid #EDB780;outline-offset:3px}"},{"name":"Secondary button","kind":"button","refersTo":"button-secondary","description":"Native variant translated for preview; focus outline is browser-only.","html":"<button class=\"ds-button-secondary\">Pay your goal</button>","css":".ds-button-secondary{min-height:52px;padding:12px 20px;border:0;border-radius:16px;font:600 16px/24px system-ui,sans-serif;cursor:pointer;background:#222223;color:#F5F2EC;} .ds-button-secondary:hover{opacity:.9} .ds-button-secondary:active{opacity:.75} .ds-button-secondary:disabled{opacity:.45;cursor:default} .ds-button-secondary:focus-visible{outline:2px solid #EDB780;outline-offset:3px}"},{"name":"Ghost button","kind":"button","refersTo":"button-ghost","description":"Native variant translated for preview; focus outline is browser-only.","html":"<button class=\"ds-button-ghost\">Pay your goal</button>","css":".ds-button-ghost{min-height:52px;padding:12px 20px;border:0;border-radius:16px;font:600 16px/24px system-ui,sans-serif;cursor:pointer;background:transparent;color:#F5F2EC;} .ds-button-ghost:hover{opacity:.9} .ds-button-ghost:active{opacity:.75} .ds-button-ghost:disabled{opacity:.45;cursor:default} .ds-button-ghost:focus-visible{outline:2px solid #EDB780;outline-offset:3px}"},{"name":"Danger button","kind":"button","refersTo":"button-danger","description":"Native variant translated for preview; focus outline is browser-only.","html":"<button class=\"ds-button-danger\">Pay your goal</button>","css":".ds-button-danger{min-height:52px;padding:12px 20px;border:0;border-radius:16px;font:600 16px/24px system-ui,sans-serif;cursor:pointer;background:#35201D;color:#FFB1A5;} .ds-button-danger:hover{opacity:.9} .ds-button-danger:active{opacity:.75} .ds-button-danger:disabled{opacity:.45;cursor:default} .ds-button-danger:focus-visible{outline:2px solid #EDB780;outline-offset:3px}"},{"name":"Labeled field","kind":"input","refersTo":"field","description":"Elevated native input; browser focus outline is preview-only.","html":"<label class=\"ds-field-label\">Amount<input class=\"ds-field\" placeholder=\"Enter amount\" /></label>","css":".ds-field-label{display:grid;gap:8px;color:#F5F2EC;font:500 16px/24px system-ui}.ds-field{min-height:56px;padding:16px;border:0;border-radius:16px;background:#222223;color:#F5F2EC;font:17px/24px system-ui}.ds-field::placeholder{color:#B2AFA9}.ds-field:focus-visible{outline:2px solid #EDB780;outline-offset:3px}.ds-field::selection{background:#EDB780;color:#17120D}"},{"name":"Balance hero","kind":"card","refersTo":"balance-hero","description":"Warm diagonal tonal depth, without shadows.","html":"<section class=\"ds-hero\"><span>Safe to Spend</span><strong>?12,500</strong><span>Room for today. Something for tomorrow.</span></section>","css":".ds-hero{display:grid;gap:14px;padding:24px;border-radius:28px;background:linear-gradient(135deg,#211A15,#2A211A,#443024);color:#DEC8B6;font:14px/21px system-ui}.ds-hero strong{color:#F5F2EC;font:600 52px/64px system-ui;letter-spacing:-1.2px;font-variant-numeric:tabular-nums}"},{"name":"Native tabs","kind":"nav","refersTo":"navigation","description":"Home, Activity, Settings; native safe-area height remains runtime-controlled.","html":"<nav class=\"ds-tabs\"><button aria-current=\"page\">Home</button><button>Activity</button><button>Settings</button></nav>","css":".ds-tabs{display:flex;justify-content:space-around;padding:10px 0 12px;border-top:1px solid #343332;background:#0B0B0C}.ds-tabs button{min-height:54px;border:0;background:transparent;color:#B2AFA9;font:12px system-ui;cursor:pointer}.ds-tabs button[aria-current]{color:#EDB780}.ds-tabs button:hover{opacity:.9}.ds-tabs button:active{opacity:.75}.ds-tabs button:focus-visible{outline:2px solid #EDB780;outline-offset:2px}"},{"name":"Goal progress contact","kind":"custom","refersTo":"goal-avatar","description":"Static SVG preview of native ring and image-fallback initials.","html":"<div class=\"ds-contact\"><svg viewBox=\"0 0 76 76\" width=\"76\" height=\"76\" aria-label=\"Trip, 60 percent saved\"><circle cx=\"38\" cy=\"38\" r=\"36\" fill=\"none\" stroke=\"#343332\" stroke-width=\"3\"/><circle cx=\"38\" cy=\"38\" r=\"36\" fill=\"none\" stroke=\"#EDB780\" stroke-width=\"3\" stroke-dasharray=\"135.7 226.2\" stroke-linecap=\"round\" transform=\"rotate(-90 38 38)\"/><circle cx=\"38\" cy=\"38\" r=\"31\" fill=\"#EDB78025\"/><text x=\"38\" y=\"46\" text-anchor=\"middle\" fill=\"#EDB780\" font-family=\"system-ui\" font-size=\"24\">T</text></svg><span>Trip</span><small>60%</small></div>","css":".ds-contact{display:grid;justify-items:center;gap:8px;width:88px;color:#F5F2EC;font:13px/18px system-ui}.ds-contact small{color:#EDB780;font:12px/16px system-ui}"},{"name":"Information notice","kind":"card","refersTo":"notice","description":"Quiet flat explanation surface.","html":"<aside class=\"ds-notice\">Payments reserve money for your goals. Nothing leaves your bank account.</aside>","css":".ds-notice{padding:16px;border-radius:16px;background:#181819;color:#B2AFA9;font:14px/21px system-ui}"}],"narrative":{"northStar":"Warm dark savings, paid to your future.","overview":"**Creative North Star: \"Warm dark savings, paid to your future.\"**\n\nPaycebo adapts the chosen Notio world to native payment-app interactions. Warm amber, curved surfaces, a quiet serif and contact avatars make saving tangible. The balance is prominent; goals and ledgers feel personal and conversational. This describes the approved direction, rather than a new concept.\n\nVisual authority: StyleUI Notio registry in `heyfabrika/styleui`, inspected at commit `3da5706548882038f448a8ff4e570680a06b25c4`; dark sunny palette, Aleo serif, large rounded hero and restrained tonal gradients. Attribution lives in `THIRD_PARTY_NOTICES.md`. Actual source controls this adaptation: `src/components/ui.tsx`, `src/components/GoalAvatar.tsx`, `tailwind.config.js`, `app/(tabs)/index.tsx`, `app/(tabs)/_layout.tsx`, `app/goal/[id].tsx`, `src/components/TransactionRow.tsx`, `src/lib/model.ts` and `app/_layout.tsx`. Frontmatter pixels represent React Native logical units; system font names describe platform defaults.\n\nVerification boundary: dependency installation was blocked by npm registry network `EACCES`. Native rendering, screenshots, full application typecheck and Expo export are unverified; no UI signoff is claimed. Source defects in setup read retry, button label shrinking, Activity wrapping and confirmation scrolling are resolved. Review disposition remains **fix**, solely pending native rendering/full application typecheck/export verification.","keyCharacteristics":["Warm amber actions on near-black tonal surfaces.","Aleo headings with native sans controls and currency.","Circular goal contacts with explicit progress.","Flat ledger rows and conversational transaction bubbles.","Scalable text, safe areas and keyboard-safe forms."],"rules":[{"name":"Meaning Before Color","body":"Transaction meaning, errors and demo mode need words or icons as well as tint.","section":"colors"},{"name":"Amount Clarity","body":"Preserve Indian currency grouping, tabular digits and the source's adaptive balance sizing.","section":"typography"},{"name":"Tonal Depth","body":"Extend tonal layering and reserve the warm gradient for balance emphasis; do not add shadow stacks.","section":"elevation"}],"dos":["**Do** keep amber actions, Aleo headings and native sans operational text consistent.","**Do** preserve safe areas, scalable text, minimum 48-unit controls and keyboard-safe forms.","**Do** pair transaction color with words and label demo money explicitly.","**Do** use tonal surfaces, the warm balance gradient and flat divided ledger rows.","**Do** retain reduced-motion handling and image-to-initials fallbacks."],"donts":["**Don't** imply bank connectivity or money transfer through visuals or labels.","**Don't** replace the chosen dark Notio world with a new identity.","**Don't** add decorative shadow stacks or nested cards to ledger rows.","**Don't** treat source inspection or sidecar previews as native UI signoff."]}}
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T07:27:35.705719+00:00",
+  "title": "Design System: Paycebo",
+  "extensions": {
+    "colorMeta": {
+      "background": {
+        "role": "neutral",
+        "displayName": "Background",
+        "tonalRamp": [
+          "oklch(15.00% 0.00539 117.92)",
+          "oklch(26.43% 0.00539 117.92)",
+          "oklch(37.86% 0.00539 117.92)",
+          "oklch(49.29% 0.00539 117.92)",
+          "oklch(60.71% 0.00539 117.92)",
+          "oklch(72.14% 0.00539 117.92)",
+          "oklch(83.57% 0.00539 117.92)",
+          "oklch(95.00% 0.00539 117.92)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "tonalRamp": [
+          "oklch(15.00% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95.00% 0.00000 89.88)"
+        ]
+      },
+      "elevated": {
+        "role": "neutral",
+        "displayName": "Elevated",
+        "tonalRamp": [
+          "oklch(15.00% 0.01145 128.60)",
+          "oklch(26.43% 0.01145 128.60)",
+          "oklch(37.86% 0.01145 128.60)",
+          "oklch(49.29% 0.01145 128.60)",
+          "oklch(60.71% 0.01145 128.60)",
+          "oklch(72.14% 0.01145 128.60)",
+          "oklch(83.57% 0.01145 128.60)",
+          "oklch(95.00% 0.01145 128.60)"
+        ]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Foreground",
+        "tonalRamp": [
+          "oklch(15.00% 0.02180 152.99)",
+          "oklch(26.43% 0.02180 152.99)",
+          "oklch(37.86% 0.02180 152.99)",
+          "oklch(49.29% 0.02180 152.99)",
+          "oklch(60.71% 0.02180 152.99)",
+          "oklch(72.14% 0.02180 152.99)",
+          "oklch(83.57% 0.02180 152.99)",
+          "oklch(95.00% 0.02180 152.99)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15.00% 0.01752 151.47)",
+          "oklch(26.43% 0.01752 151.47)",
+          "oklch(37.86% 0.01752 151.47)",
+          "oklch(49.29% 0.01752 151.47)",
+          "oklch(60.71% 0.01752 151.47)",
+          "oklch(72.14% 0.01752 151.47)",
+          "oklch(83.57% 0.01752 151.47)",
+          "oklch(95.00% 0.01752 151.47)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Accent",
+        "tonalRamp": [
+          "oklch(15.00% 0.16658 139.11)",
+          "oklch(26.43% 0.16658 139.11)",
+          "oklch(37.86% 0.16658 139.11)",
+          "oklch(49.29% 0.16658 139.11)",
+          "oklch(60.71% 0.16658 139.11)",
+          "oklch(72.14% 0.16658 139.11)",
+          "oklch(83.57% 0.16658 139.11)",
+          "oklch(95.00% 0.16658 139.11)"
+        ]
+      },
+      "accent-ink": {
+        "role": "neutral",
+        "displayName": "Accent Ink",
+        "tonalRamp": [
+          "oklch(15.00% 0.03063 153.32)",
+          "oklch(26.43% 0.03063 153.32)",
+          "oklch(37.86% 0.03063 153.32)",
+          "oklch(49.29% 0.03063 153.32)",
+          "oklch(60.71% 0.03063 153.32)",
+          "oklch(72.14% 0.03063 153.32)",
+          "oklch(83.57% 0.03063 153.32)",
+          "oklch(95.00% 0.03063 153.32)"
+        ]
+      },
+      "accent-text": {
+        "role": "primary",
+        "displayName": "Accent Text",
+        "tonalRamp": [
+          "oklch(15.00% 0.11877 148.23)",
+          "oklch(26.43% 0.11877 148.23)",
+          "oklch(37.86% 0.11877 148.23)",
+          "oklch(49.29% 0.11877 148.23)",
+          "oklch(60.71% 0.11877 148.23)",
+          "oklch(72.14% 0.11877 148.23)",
+          "oklch(83.57% 0.11877 148.23)",
+          "oklch(95.00% 0.11877 148.23)"
+        ]
+      },
+      "dark": {
+        "role": "neutral",
+        "displayName": "Dark",
+        "tonalRamp": [
+          "oklch(15.00% 0.02123 161.76)",
+          "oklch(26.43% 0.02123 161.76)",
+          "oklch(37.86% 0.02123 161.76)",
+          "oklch(49.29% 0.02123 161.76)",
+          "oklch(60.71% 0.02123 161.76)",
+          "oklch(72.14% 0.02123 161.76)",
+          "oklch(83.57% 0.02123 161.76)",
+          "oklch(95.00% 0.02123 161.76)"
+        ]
+      },
+      "on-dark": {
+        "role": "neutral",
+        "displayName": "On Dark",
+        "tonalRamp": [
+          "oklch(15.00% 0.00692 124.45)",
+          "oklch(26.43% 0.00692 124.45)",
+          "oklch(37.86% 0.00692 124.45)",
+          "oklch(49.29% 0.00692 124.45)",
+          "oklch(60.71% 0.00692 124.45)",
+          "oklch(72.14% 0.00692 124.45)",
+          "oklch(83.57% 0.00692 124.45)",
+          "oklch(95.00% 0.00692 124.45)"
+        ]
+      },
+      "dark-muted": {
+        "role": "neutral",
+        "displayName": "Dark Muted",
+        "tonalRamp": [
+          "oklch(15.00% 0.03128 145.30)",
+          "oklch(26.43% 0.03128 145.30)",
+          "oklch(37.86% 0.03128 145.30)",
+          "oklch(49.29% 0.03128 145.30)",
+          "oklch(60.71% 0.03128 145.30)",
+          "oklch(72.14% 0.03128 145.30)",
+          "oklch(83.57% 0.03128 145.30)",
+          "oklch(95.00% 0.03128 145.30)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "tonalRamp": [
+          "oklch(15.00% 0.01781 131.89)",
+          "oklch(26.43% 0.01781 131.89)",
+          "oklch(37.86% 0.01781 131.89)",
+          "oklch(49.29% 0.01781 131.89)",
+          "oklch(60.71% 0.01781 131.89)",
+          "oklch(72.14% 0.01781 131.89)",
+          "oklch(83.57% 0.01781 131.89)",
+          "oklch(95.00% 0.01781 131.89)"
+        ]
+      },
+      "positive": {
+        "role": "secondary",
+        "displayName": "Positive",
+        "tonalRamp": [
+          "oklch(15.00% 0.11877 148.23)",
+          "oklch(26.43% 0.11877 148.23)",
+          "oklch(37.86% 0.11877 148.23)",
+          "oklch(49.29% 0.11877 148.23)",
+          "oklch(60.71% 0.11877 148.23)",
+          "oklch(72.14% 0.11877 148.23)",
+          "oklch(83.57% 0.11877 148.23)",
+          "oklch(95.00% 0.11877 148.23)"
+        ]
+      },
+      "danger": {
+        "role": "secondary",
+        "displayName": "Danger",
+        "tonalRamp": [
+          "oklch(15.00% 0.15347 20.48)",
+          "oklch(26.43% 0.15347 20.48)",
+          "oklch(37.86% 0.15347 20.48)",
+          "oklch(49.29% 0.15347 20.48)",
+          "oklch(60.71% 0.15347 20.48)",
+          "oklch(72.14% 0.15347 20.48)",
+          "oklch(83.57% 0.15347 20.48)",
+          "oklch(95.00% 0.15347 20.48)"
+        ]
+      },
+      "danger-surface": {
+        "role": "neutral",
+        "displayName": "Danger Surface",
+        "tonalRamp": [
+          "oklch(15.00% 0.02074 17.52)",
+          "oklch(26.43% 0.02074 17.52)",
+          "oklch(37.86% 0.02074 17.52)",
+          "oklch(49.29% 0.02074 17.52)",
+          "oklch(60.71% 0.02074 17.52)",
+          "oklch(72.14% 0.02074 17.52)",
+          "oklch(83.57% 0.02074 17.52)",
+          "oklch(95.00% 0.02074 17.52)"
+        ]
+      },
+      "contribution-surface": {
+        "role": "neutral",
+        "displayName": "Contribution Surface",
+        "tonalRamp": [
+          "oklch(15.00% 0.02595 136.33)",
+          "oklch(26.43% 0.02595 136.33)",
+          "oklch(37.86% 0.02595 136.33)",
+          "oklch(49.29% 0.02595 136.33)",
+          "oklch(60.71% 0.02595 136.33)",
+          "oklch(72.14% 0.02595 136.33)",
+          "oklch(83.57% 0.02595 136.33)",
+          "oklch(95.00% 0.02595 136.33)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Manrope Bold Display",
+        "purpose": "Screen and section headings; preview does not bundle fonts."
+      },
+      "body": {
+        "displayName": "Manrope Regular Body",
+        "purpose": "Operational copy; platform input/tab fonts remain source exceptions."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "goal-progress",
+        "value": "350ms native; 0ms with reduced motion; static web ring",
+        "purpose": "Progress feedback, with reduced motion initially true."
+      },
+      {
+        "name": "setup-content",
+        "value": "220ms; 0ms with reduced motion",
+        "purpose": "Question content fade."
+      },
+      {
+        "name": "setup-progress",
+        "value": "300ms; 0ms with reduced motion",
+        "purpose": "Setup progress transition."
+      },
+      {
+        "name": "pressed-opacity",
+        "value": "0.75",
+        "purpose": "Action feedback."
+      }
+    ],
+    "breakpoints": [],
+    "verification": {
+      "authority": "Shipped adaptive React Native source; user-approved green finance reference; direction seed f7815d43",
+      "status": "Reported browser walkthroughs/captures, 50 domain/storage tests, full typecheck and Android/iOS/web exports pass. Native UI/QUALITY BAR comparison, camera, keyboard, gestures and OS text scaling remain unverified: no attached adb device and emulator lock access failed. No HTML/CSS detector ran for the native adaptive target.",
+      "previewBoundary": "Self-contained HTML/CSS translations approximate native primitives; preview hover/focus styles and font fallbacks are not native signoff.",
+      "tonalRampBoundary": "Synthetic OKLCH panel ramps are metadata, not implemented application tokens."
+    }
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Native variant translated for preview; focus outline is browser-only.",
+      "html": "<button class=\"ds-button-primary\">Pay your goal</button>",
+      "css": ".ds-button-primary{min-height:52px;padding:12px 20px;border:0;border-radius:16px;font:600 16px/24px Manrope,sans-serif;cursor:pointer;background:#86DB6E;color:#102015;} .ds-button-primary:hover{opacity:.9} .ds-button-primary:active{opacity:.75} .ds-button-primary:disabled{opacity:.45;cursor:default} .ds-button-primary:focus-visible{outline:2px solid #86DB6E;outline-offset:3px}"
+    },
+    {
+      "name": "Secondary button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Native variant translated for preview; focus outline is browser-only.",
+      "html": "<button class=\"ds-button-secondary\">Choose photo</button>",
+      "css": ".ds-button-secondary{min-height:52px;padding:12px 20px;border:0;border-radius:16px;font:600 16px/24px Manrope,sans-serif;cursor:pointer;background:#E9EDE5;color:#17221A;} .ds-button-secondary:hover{opacity:.9} .ds-button-secondary:active{opacity:.75} .ds-button-secondary:disabled{opacity:.45;cursor:default} .ds-button-secondary:focus-visible{outline:2px solid #86DB6E;outline-offset:3px}"
+    },
+    {
+      "name": "Ghost button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Native variant translated for preview; focus outline is browser-only.",
+      "html": "<button class=\"ds-button-ghost\">Cancel</button>",
+      "css": ".ds-button-ghost{min-height:52px;padding:12px 20px;border:0;border-radius:16px;font:600 16px/24px Manrope,sans-serif;cursor:pointer;background:transparent;color:#17221A;} .ds-button-ghost:hover{opacity:.9} .ds-button-ghost:active{opacity:.75} .ds-button-ghost:disabled{opacity:.45;cursor:default} .ds-button-ghost:focus-visible{outline:2px solid #86DB6E;outline-offset:3px}"
+    },
+    {
+      "name": "Danger button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Native variant translated for preview; focus outline is browser-only.",
+      "html": "<button class=\"ds-button-danger\">Archive allowance</button>",
+      "css": ".ds-button-danger{min-height:52px;padding:12px 20px;border:0;border-radius:16px;font:600 16px/24px Manrope,sans-serif;cursor:pointer;background:#FCE9E9;color:#A42E38;} .ds-button-danger:hover{opacity:.9} .ds-button-danger:active{opacity:.75} .ds-button-danger:disabled{opacity:.45;cursor:default} .ds-button-danger:focus-visible{outline:2px solid #86DB6E;outline-offset:3px}"
+    },
+    {
+      "name": "Labeled field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Elevated native input; browser focus outline is preview-only.",
+      "html": "<label class=\"ds-field-label\">Amount<input class=\"ds-field\" placeholder=\"Enter amount\" /></label>",
+      "css": ".ds-field-label{display:grid;gap:8px;color:#17221A;font:500 16px/24px Manrope,sans-serif}.ds-field{min-height:56px;padding:16px;border:0;border-radius:16px;background:#E9EDE5;color:#17221A;font:17px/24px system-ui,sans-serif}.ds-field::placeholder{color:#5D675F}.ds-field:focus-visible{outline:2px solid #86DB6E;outline-offset:3px}.ds-field::selection{background:#86DB6E;color:#102015}"
+    },
+    {
+      "name": "Native tabs",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Home, Activity, Settings; native safe-area height remains runtime-controlled.",
+      "html": "<nav class=\"ds-tabs\"><button aria-current=\"page\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"m3 10 9-7 9 7v11H3z M9 21v-8h6v8\"/></svg>Home</button><button><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M5 21V12 M12 21V3 M19 21V8\"/></svg>Activity</button><button><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M4 6h16 M4 12h16 M4 18h16 M8 3v6 M16 9v6 M10 15v6\"/></svg>Settings</button></nav>",
+      "css": ".ds-tabs{display:flex;justify-content:space-around;padding:10px 0 12px;border-top:1px solid #D8DFD3;background:#F4F5F1}.ds-tabs button{min-height:76px;border:0;background:transparent;color:#5D675F;font:12px/18px sans-serif;cursor:pointer}.ds-tabs button[aria-current]{color:#0B1711}.ds-tabs svg{display:block;margin:0 auto 4px;padding:8px;border-radius:20px}.ds-tabs button[aria-current] svg{background:#0B1711;color:#F6F8F3}.ds-tabs button:hover{opacity:.9}.ds-tabs button:active{opacity:.75}.ds-tabs button:focus-visible{outline:2px solid #257338;outline-offset:2px}"
+    },
+    {
+      "name": "Goal progress contact",
+      "kind": "custom",
+      "refersTo": "goal-avatar",
+      "description": "Static SVG translation of native ring and initials fallback; goal color is contact-specific.",
+      "html": "<div class=\"ds-contact\"><svg viewBox=\"0 0 76 76\" width=\"76\" height=\"76\" aria-label=\"Trip, 60 percent saved\"><circle cx=\"38\" cy=\"38\" r=\"36\" fill=\"none\" stroke=\"#D8DFD3\" stroke-width=\"3\"/><circle cx=\"38\" cy=\"38\" r=\"36\" fill=\"none\" stroke=\"#86DB6E\" stroke-width=\"3\" stroke-dasharray=\"135.7 226.2\" stroke-linecap=\"round\" transform=\"rotate(-90 38 38)\"/><circle cx=\"38\" cy=\"38\" r=\"31\" fill=\"#86DB6E25\"/><text x=\"38\" y=\"46\" text-anchor=\"middle\" fill=\"#17221A\" font-family=\"Manrope,sans-serif\" font-size=\"24\">T</text></svg><span>Trip</span><small>60%</small></div>",
+      "css": ".ds-contact{display:grid;justify-items:center;gap:8px;width:86px;color:#17221A;font:13px/18px Manrope,sans-serif}.ds-contact small{color:#5D675F;font:12px/16px Manrope,sans-serif}"
+    },
+    {
+      "name": "Information notice",
+      "kind": "card",
+      "refersTo": "notice",
+      "description": "Quiet flat explanation surface.",
+      "html": "<aside class=\"ds-notice\">Savings reserve money. Recording expenses adjusts your tracked balance. Paycebo never transfers money.</aside>",
+      "css": ".ds-notice{padding:16px;border-radius:16px;background:#FFFFFF;color:#5D675F;font:14px/21px Manrope,sans-serif}"
+    },
+    {
+      "name": "Allowance card",
+      "kind": "card",
+      "refersTo": "allowance-card",
+      "description": "White contact row with current-period remaining money.",
+      "html": "<article class=\"ds-allowance\"><span class=\"ds-allowance-avatar\">F</span><span>Food<small>INR 100 / day</small></span><span class=\"ds-allowance-amount\">INR 70<small>left</small></span></article>",
+      "css": ".ds-allowance{display:flex;align-items:center;gap:12px;padding:16px;border-radius:16px;background:#fff;color:#17221A;font:16px/24px Manrope,sans-serif}.ds-allowance-avatar{width:52px;height:52px;border:3px solid #398332;border-radius:50%;display:grid;place-items:center;background:#39833225}.ds-allowance small{display:block;font-size:12px;color:#5D675F}.ds-allowance-amount{margin-left:auto;text-align:right;color:#257338;font-weight:700}"
+    },
+    {
+      "name": "Frequency chip",
+      "kind": "chip",
+      "refersTo": "frequency-chip",
+      "description": "Wrapped recurring-period selection, with explicit selected state.",
+      "html": "<div class=\"ds-frequency\"><button aria-pressed=\"true\">Daily</button><button aria-pressed=\"false\">Weekly</button><button aria-pressed=\"false\">Monthly</button></div>",
+      "css": ".ds-frequency{display:flex;flex-wrap:wrap;gap:8px}.ds-frequency button{min-height:48px;padding:12px 20px;border:0;border-radius:16px;background:#E9EDE5;color:#17221A;font:16px/24px Manrope,sans-serif;cursor:pointer}.ds-frequency button[aria-pressed=\"true\"]{background:#86DB6E}.ds-frequency button:hover{opacity:.9}.ds-frequency button:active{opacity:.75}.ds-frequency button:focus-visible{outline:2px solid #257338;outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Personal money plans as contacts.",
+    "overview": "Paycebo presents future goals and everyday allowances as personal contacts. The user-approved green finance reference supplies the visual world: dark green balance headers, rounded light panels, Manrope and green controls. Calm amounts, clear labels and one focused action per task support everyday money planning. This replaces the former Notio, amber, serif and dark-only direction.\n\nThe shipped source is authoritative: `app/_layout.tsx` records direction seed `f7815d43`; `src/components/ui.tsx`, `primitives.tsx`, `OnboardingFrame.tsx`, `GoalAvatar.tsx`, `PhotoControl.tsx`, `tailwind.config.js` and the Home, allowance, expense and goal routes establish these patterns. Owned gluestack primitives are manually integrated with NativeWind 4. Frontmatter pixels represent React Native logical units. Display/body font fallbacks handle loading failure; input typography still uses the platform default.\n\nVerification boundary: reported browser walkthroughs and captures cover phone, compact and wide Home, welcome/setup, allowances, overspending, photo choice, activity, settings and goal chat. The reported 50 domain/storage tests, full typecheck and Android/iOS/web exports pass. Native UI captures and comparison with the native QUALITY BAR remain unverified: no attached adb device was available and emulator lock access failed. Camera, native keyboard, gestures and OS text scaling require device checks. No HTML/CSS detector ran because this is an adaptive native target. Browser evidence, exports and sidecar previews do not establish native UI signoff.",
+    "keyCharacteristics": [
+      "Dark green headers above rounded light working surfaces.",
+      "Manrope headings and body copy with clear INR amounts.",
+      "Green rounded actions and explicit selected controls.",
+      "Circular goal and allowance contacts with photo or initials fallback.",
+      "Flat activity rows, conversational savings and restrained semantic tints.",
+      "Safe areas, scalable text, reduced motion and keyboard-safe forms."
+    ],
+    "rules": [
+      {
+        "name": "Meaning Before Color",
+        "body": "Transaction meaning, errors and demo mode need words or icons as well as tint.",
+        "section": "colors"
+      },
+      {
+        "name": "Amount Clarity",
+        "body": "Preserve Indian currency grouping, tabular digits where implemented and the source's adaptive balance sizing.",
+        "section": "typography"
+      },
+      {
+        "name": "Tonal Depth",
+        "body": "Use tonal surfaces, restrained header gradients and dividers before adding elevation effects.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** preserve dark green headers, rounded light surfaces, Manrope and green actions.",
+      "**Do** preserve safe areas, scalable text, minimum 48-unit controls and keyboard-safe forms.",
+      "**Do** pair transaction color with words and label demo money explicitly.",
+      "**Do** use tonal surfaces and flat divided activity rows.",
+      "**Do** retain reduced-motion handling and image-to-initials fallbacks."
+    ],
+    "donts": [
+      "**Don't** imply bank connectivity, real money transfers or cloud photo uploads through visuals or labels.",
+      "**Don't** reintroduce the discarded Notio, amber-action, serif or dark-only identity.",
+      "**Don't** add decorative shadow stacks or nested cards to ledger rows.",
+      "**Don't** treat browser walkthroughs, exports or sidecar previews as native UI signoff."
+    ]
+  }
+}

@@ -43,7 +43,7 @@ export class SavingsRepository {
       this.listener(state, savedMode);
     });
   }
-  activate(mode: Mode, create?: () => SavingsState): Promise<void> {
+  activate(mode: Mode, create?: () => SavingsState): Promise<SavingsState> {
     return this.enqueue(async () => {
       const raw = await this.storage.getItem(STORAGE_KEYS[mode]);
       let state: SavingsState;
@@ -59,6 +59,7 @@ export class SavingsRepository {
       this.current = state;
       this.active = mode;
       this.listener(state, mode);
+      return state;
     });
   }
   hasPersonal(): Promise<boolean> {

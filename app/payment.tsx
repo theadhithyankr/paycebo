@@ -10,7 +10,7 @@ import { errorMessage, useSavings } from "../src/state/SavingsProvider";
 
 export default function Payment() {
   const { id, kind } = useLocalSearchParams<{ id: string; kind: string }>();
-  const { state, update } = useSavings();
+  const { state, update, now } = useSavings();
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
   const [busy, setBusy] = useState(false);
@@ -22,7 +22,7 @@ export default function Payment() {
   const goal = state.goals.find((item) => item.id === id);
   if (!goal || (kind !== "contribution" && kind !== "withdrawal")) return <FormPage title="Payment unavailable"><Empty title="Choose a goal first" description="Return home and open a goal conversation." action={<Button label="Go home" onPress={() => router.replace("/(tabs)")} />} /></FormPage>;
   const paid = kind === "contribution";
-  const maxAmount = paid ? Math.max(0, Math.min(safeToSpend(state), goal.targetPaise - savedFor(state, goal.id))) : savedFor(state, goal.id);
+  const maxAmount = paid ? Math.max(0, Math.min(safeToSpend(state, now), goal.targetPaise - savedFor(state, goal.id))) : savedFor(state, goal.id);
   async function commit(value: number) {
     if (lock.current || !goal) return;
     lock.current = true; setBusy(true); setError("");
@@ -47,7 +47,7 @@ export default function Payment() {
   if (success !== null) return <FormPage title={paid ? "A little win." : "Room to breathe."}>
     <DemoBanner />
     <View className="items-center py-10 gap-5" accessibilityLiveRegion="polite">
-      <View className="h-20 w-20 rounded-full items-center justify-center bg-[#252C25]"><Icon name="check" size={36} color={palette.positive} /></View>
+      <View className="h-20 w-20 rounded-full items-center justify-center bg-[#E2EEDD]"><Icon name="check" size={36} color={palette.positive} /></View>
       <Display style={{ fontSize: 40, lineHeight: 50 }}>{money(success)}</Display>
       <Txt style={{ textAlign: "center" }}>{paid ? "Saved for " : "Requested back from "}{goal.name}.</Txt>
       {note.trim() ? <Txt className="text-muted" style={{ textAlign: "center" }}>“{note.trim()}”</Txt> : null}
@@ -63,7 +63,7 @@ export default function Payment() {
     <View className="flex-row flex-wrap gap-2">
       {[100, 500, 1000].filter((value) => value * 100 <= maxAmount).map((value) => <Pressable key={value} accessibilityRole="button" accessibilityLabel={"Use " + money(value * 100)} disabled={busy}
         className="min-h-[48px] px-4 justify-center rounded-full bg-elevated" onPress={() => setAmount(String(value))}><Txt style={{ fontSize: 14 }}>{money(value * 100)}</Txt></Pressable>)}
-      {maxAmount > 0 ? <Pressable accessibilityRole="button" disabled={busy} className="min-h-[48px] px-4 justify-center rounded-full bg-elevated" onPress={() => setAmount((maxAmount / 100).toFixed(2))}><Txt className="text-accent" style={{ fontSize: 14 }}>{paid ? "Remaining" : "All saved"}</Txt></Pressable> : null}
+      {maxAmount > 0 ? <Pressable accessibilityRole="button" disabled={busy} className="min-h-[48px] px-4 justify-center rounded-full bg-elevated" onPress={() => setAmount((maxAmount / 100).toFixed(2))}><Txt className="text-positive" style={{ fontSize: 14 }}>{paid ? "Remaining" : "All saved"}</Txt></Pressable> : null}
     </View>
     <Field label={paid ? "What’s the little win? (optional)" : "Add a note (optional)"} value={note} onChangeText={setNote} placeholder={paid ? "Skipped ordering pizza" : "Needed a little breathing room"} maxLength={200} multiline editable={!busy} style={{ minHeight: 96, textAlignVertical: "top" }} hint={note.length + "/200 characters"} />
     <ErrorNotice message={error} />

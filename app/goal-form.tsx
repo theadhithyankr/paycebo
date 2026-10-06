@@ -5,6 +5,8 @@ import { GoalAvatar } from "../src/components/GoalAvatar";
 import { Button, DemoBanner, Empty, ErrorNotice, Field, FormPage, Notice, palette, Txt } from "../src/components/ui";
 import { addGoal, COLORS, editGoal, inputMoney, parseMoney, savedFor, WEEKDAYS, type Goal } from "../src/lib/model";
 import { errorMessage, useSavings } from "../src/state/SavingsProvider";
+import { PhotoControl, usePhotoChoice } from "../src/components/PhotoControl";
+import { deleteUnreferencedPhoto } from "../src/state/photoCleanup";
 
 export default function GoalForm() {
   const { id } = useLocalSearchParams<{ id?: string }>();
@@ -12,7 +14,7 @@ export default function GoalForm() {
   const existing = state?.goals.find((goal) => goal.id === id);
   const [name, setName] = useState(existing?.name ?? "");
   const [target, setTarget] = useState(existing ? inputMoney(existing.targetPaise) : "");
-  const [imageUrl, setImageUrl] = useState(existing?.imageUrl ?? "");
+  const photo = usePhotoChoice(existing?.photoId, existing?.imageUrl);
   const [weekly, setWeekly] = useState(existing?.weeklyPaise ? inputMoney(existing.weeklyPaise) : "");
   const [dueDay, setDueDay] = useState(existing?.dueDay ?? 5);
   const [color, setColor] = useState<string>(existing?.color ?? COLORS[(state?.goals.length ?? 0) % COLORS.length]!);
@@ -21,26 +23,29 @@ export default function GoalForm() {
   const lock = useRef(false);
   if (!state) return <Redirect href="/" />;
   if (id && !existing) return <FormPage title="Goal unavailable"><Empty title="This goal isn’t here" description="Return home to choose another goal." action={<Button label="Go home" onPress={() => router.replace("/(tabs)")} />} /></FormPage>;
-  const preview: Goal = { id: "preview", name: name.trim() || "Your Goal", targetPaise: 1, weeklyPaise: 0, dueDay, imageUrl: imageUrl.trim(), color, createdAt: new Date().toISOString() };
+  const preview: Goal = { id: "preview", name: name.trim() || "Your Goal", targetPaise: 1, weeklyPaise: 0, dueDay, imageUrl: photo.imageUrl, photoId: photo.photoId, color, createdAt: new Date().toISOString() };
   async function save() {
     if (lock.current) return;
     lock.current = true; setBusy(true); setError("");
     try {
-      const input = { name, targetPaise: parseMoney(target), imageUrl, color, weeklyPaise: weekly.trim() ? parseMoney(weekly, true) : 0, dueDay };
+      const targetPaise = parseMoney(target);
+      const image = await photo.prepare();
+      const input = { name, targetPaise, ...image, color, weeklyPaise: weekly.trim() ? parseMoney(weekly, true) : 0, dueDay };
       await update((current) => id ? editGoal(current, id, input) : addGoal(current, input));
+      if (existing?.photoId && existing.photoId !== image.photoId) void deleteUnreferencedPhoto(existing.photoId).catch(() => {});
       router.back();
     } catch (err) { setError(errorMessage(err)); }
-    finally { lock.current = false; setBusy(false); }
+    finally { photo.settled(); lock.current = false; setBusy(false); }
   }
   return <FormPage title={existing ? "Edit your goal" : "Meet your next goal"} busy={busy}>
     <DemoBanner />
-    <View className="items-center gap-3"><GoalAvatar goal={preview} size={88} /><Txt className="text-muted" style={{ fontSize: 14 }}>A new contact for your future self.</Txt></View>
+    <View className="items-center gap-3"><GoalAvatar goal={preview} previewUri={photo.uri} size={88} /></View>
     <Field label="Goal name" value={name} onChangeText={setName} placeholder="e.g. A week in the mountains" maxLength={60} editable={!busy} autoCapitalize="words" />
     <Field label="Target amount (₹)" value={target} onChangeText={setTarget} keyboardType="decimal-pad" placeholder="e.g. 25000" maxLength={12} editable={!busy} hint={existing ? "Already saved: " + inputMoney(savedFor(state, existing.id)) + " rupees" : undefined} />
-    <Field label="Image URL (optional)" value={imageUrl} onChangeText={setImageUrl} placeholder="https://…" autoCapitalize="none" autoCorrect={false} keyboardType="url" maxLength={2048} editable={!busy} hint="Use an https image link. No image? We’ll use your goal’s initials." />
+    <PhotoControl photo={photo} disabled={busy} />
     <View className="gap-3">
       <Txt className="font-medium">Goal color</Txt>
-      <View className="flex-row flex-wrap gap-2">{COLORS.map((item, index) => <Pressable key={item} accessibilityRole="button" accessibilityLabel={["Amber", "Blue", "Green", "Lavender", "Rose"][index] + " goal color"} accessibilityState={{ selected: color === item, disabled: busy }} disabled={busy} onPress={() => setColor(item)}
+      <View className="flex-row flex-wrap gap-2">{COLORS.slice(0, 5).map((item, index) => <Pressable key={item} accessibilityRole="button" accessibilityLabel={["Green", "Blue", "Forest", "Lavender", "Rose"][index] + " goal color"} accessibilityState={{ selected: color === item, disabled: busy }} disabled={busy} onPress={() => setColor(item)}
         className="w-12 h-12 rounded-full items-center justify-center" style={{ borderWidth: color === item ? 2 : 0, borderColor: item }}>
         <View className="w-8 h-8 rounded-full" style={{ backgroundColor: item }} />
       </Pressable>)}</View>
@@ -56,6 +61,6 @@ export default function GoalForm() {
     </View>
     <Notice>Reminders appear in your goal’s chat when you open Paycebo on or after your pledge day. They count that week’s payments minus requests.</Notice>
     <ErrorNotice message={error} />
-    <Button label={existing ? "Save changes" : "Create goal"} icon={existing ? "check" : "plus"} loading={busy} onPress={() => void save()} />
+    <Button label={existing ? "Save changes" : "Create goal"} icon={existing ? "check" : "plus"} disabled={photo.busy} loading={busy} onPress={() => void save()} />
   </FormPage>;
 }

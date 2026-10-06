@@ -5,8 +5,8 @@
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test tests/*.test.mjs",
@@ -17,13 +17,19 @@
   },
   "dependencies": {
     "@expo-google-fonts/aleo": "^0.4.0",
+    "@expo-google-fonts/manrope": "^0.4.2",
     "@expo/vector-icons": "^15.0.2",
+    "@gluestack-ui/core": "3.0.25",
+    "@gluestack-ui/utils": "3.0.21",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-navigation/native": "^7.1.33",
     "expo": "~55.0.31",
     "expo-constants": "~55.0.17",
+    "expo-file-system": "~55.0.26",
     "expo-font": "~55.0.8",
     "expo-haptics": "~55.0.18",
+    "expo-image-manipulator": "~55.0.21",
+    "expo-image-picker": "~55.0.24",
     "expo-linear-gradient": "~55.0.18",
     "expo-linking": "~55.0.17",
     "expo-router": "~55.0.18",
@@ -47,5 +53,7 @@
     "tailwindcss": "3.4.19",
     "typescript": "~5.9.2"
   },
-  "engines": { "node": ">=22.13.0" }
+  "engines": {
+    "node": ">=22.13.0"
+  }
 }
