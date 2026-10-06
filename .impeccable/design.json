@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-06T07:27:35.705719+00:00",
+  "generatedAt": "2026-10-06T11:17:05.145736+00:00",
   "title": "Design System: Paycebo",
   "extensions": {
     "colorMeta": {
@@ -236,10 +236,16 @@
       },
       "body": {
         "displayName": "Manrope Regular Body",
-        "purpose": "Operational copy; platform input/tab fonts remain source exceptions."
+        "purpose": "Operational copy and dock labels; platform input fonts remain source exceptions."
       }
     },
-    "shadows": [],
+    "shadows": [
+      {
+        "name": "floating-dock",
+        "value": "black, offset 0 6, opacity 0.16, radius 18; Android elevation 8",
+        "purpose": "Separate the floating navigation surface from scrolling content."
+      }
+    ],
     "motion": [
       {
         "name": "goal-progress",
@@ -265,9 +271,58 @@
     "breakpoints": [],
     "verification": {
       "authority": "Shipped adaptive React Native source; user-approved green finance reference; direction seed f7815d43",
-      "status": "Reported browser walkthroughs/captures, 50 domain/storage tests, full typecheck and Android/iOS/web exports pass. Native UI/QUALITY BAR comparison, camera, keyboard, gestures and OS text scaling remain unverified: no attached adb device and emulator lock access failed. No HTML/CSS detector ran for the native adaptive target.",
+      "status": "Domain verification passed 65 tests, TypeScript checked 48 source files, and web/Android/iOS exports passed. Browser checks covered both funding actions, Cancel, storage failure/retry, duplicate taps, shared explanation persistence and preference write failure, compact layouts and both themes. API 35 Android emulator checks used a locally signed QA APK with the current exported Hermes bundle in the existing EAS-built native shell: INR 20 to INR 14,000 top-up, Cancel preserving 14000, explanation toggle off, committed bank/saved/Safe to Spend totals and Pay enabled for the unfinished goal at zero availability. Balance rows passed normal text and font scale 1.3 inspection with complete labels and amounts. Review evidence: `.impeccable/review/funding-native-home-dark-phone.png`, `funding-native-popup-dark-phone.png`, `funding-native-success-dark-phone.png`, `funding-native-home-large-phone.png` and `funding-popup-light-compact.png`. The EAS cloud distribution build was not regenerated; a fresh EAS build is needed for distribution. Earlier API 35 captures also cover light/dark Home, theme controls, keyboard-visible setup/allowance forms, success alignment, dock/last-row scrolling and pinned widget families. iOS runtime, physical-device camera/gestures/performance, full screen-reader navigation and battery-restricted/background widget refresh remain acceptance checks. See QA.md.",
       "previewBoundary": "Self-contained HTML/CSS translations approximate native primitives; preview hover/focus styles and font fallbacks are not native signoff.",
       "tonalRampBoundary": "Synthetic OKLCH panel ramps are metadata, not implemented application tokens."
+    },
+    "appearance": {
+      "source": "src/lib/appearance.ts",
+      "default": "system",
+      "storageKey": "paycebo:appearance:v1",
+      "darkOverrides": {
+        "background": "{colors.dark-background}",
+        "surface": "{colors.dark-surface}",
+        "elevated": "{colors.dark-elevated}",
+        "foreground": "{colors.dark-foreground}",
+        "muted": "{colors.dark-supporting}",
+        "line": "{colors.dark-line}",
+        "positive": "{colors.dark-positive}",
+        "danger": "{colors.dark-danger}",
+        "accentText": "{colors.dark-positive}",
+        "dangerSurface": "{colors.dark-danger-surface}",
+        "contribution": "{colors.dark-contribution}"
+      }
+    },
+    "balanceMetrics": {
+      "source": "src/components/BalanceMetrics.tsx",
+      "layout": "One translucent panel, three aligned icon/label-left and money-right rows.",
+      "stackedWhen": [
+        "viewport width < 360 logical units",
+        "font scale > 1.2",
+        "any formatted metric length > 12"
+      ],
+      "stackedLayout": "Every row places its icon and label above its right-aligned amount; retain 22/30 tabular money typography."
+    },
+    "fundingHints": {
+      "source": "src/state/FundingHintsProvider.tsx",
+      "default": true,
+      "storageKey": "paycebo:funding-hints:v1",
+      "surfaces": [
+        "Settings",
+        "Review your balance dialog"
+      ],
+      "failureBehavior": "Failed writes preserve the previous choice with an error; failed reads leave explanations on and report the error. Money snapshot schema stays 2."
+    },
+    "goalFunding": {
+      "source": "src/lib/goal-funding.ts",
+      "preview": "previewGoalFunding computes available funds, existing reservations, required tracked balance and shortfall using the actual contribution.",
+      "commit": "fundGoal rejects changed previews and commits tracked balance plus contribution through one existing repository write, preserving reservations and goal target.",
+      "actions": [
+        "Cancel",
+        "Set balance to required amount & save",
+        "Add shortfall & save"
+      ],
+      "behavior": "Pay stays enabled for unfinished goals at zero availability. Cancel preserves amount and note; write failure preserves the dialog for retry; pending actions lock duplicate submissions. Explanations are optional; factual summary and funds confirmation stay visible."
     }
   },
   "components": [
@@ -312,12 +367,12 @@
       "css": ".ds-field-label{display:grid;gap:8px;color:#17221A;font:500 16px/24px Manrope,sans-serif}.ds-field{min-height:56px;padding:16px;border:0;border-radius:16px;background:#E9EDE5;color:#17221A;font:17px/24px system-ui,sans-serif}.ds-field::placeholder{color:#5D675F}.ds-field:focus-visible{outline:2px solid #86DB6E;outline-offset:3px}.ds-field::selection{background:#86DB6E;color:#102015}"
     },
     {
-      "name": "Native tabs",
+      "name": "Floating navigation dock",
       "kind": "nav",
       "refersTo": "navigation",
-      "description": "Home, Activity, Settings; native safe-area height remains runtime-controlled.",
-      "html": "<nav class=\"ds-tabs\"><button aria-current=\"page\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"m3 10 9-7 9 7v11H3z M9 21v-8h6v8\"/></svg>Home</button><button><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M5 21V12 M12 21V3 M19 21V8\"/></svg>Activity</button><button><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M4 6h16 M4 12h16 M4 18h16 M8 3v6 M16 9v6 M10 15v6\"/></svg>Settings</button></nav>",
-      "css": ".ds-tabs{display:flex;justify-content:space-around;padding:10px 0 12px;border-top:1px solid #D8DFD3;background:#F4F5F1}.ds-tabs button{min-height:76px;border:0;background:transparent;color:#5D675F;font:12px/18px sans-serif;cursor:pointer}.ds-tabs button[aria-current]{color:#0B1711}.ds-tabs svg{display:block;margin:0 auto 4px;padding:8px;border-radius:20px}.ds-tabs button[aria-current] svg{background:#0B1711;color:#F6F8F3}.ds-tabs button:hover{opacity:.9}.ds-tabs button:active{opacity:.75}.ds-tabs button:focus-visible{outline:2px solid #257338;outline-offset:2px}"
+      "description": "Surface dock with green active tab; safe-area offset and keyboard hiding remain native runtime behavior.",
+      "html": "<nav class=\"ds-tabs\"><button aria-current=\"page\"><svg width=\"21\" height=\"21\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"m3 10 9-7 9 7v11H3z M9 21v-8h6v8\"/></svg>Home</button><button><svg width=\"21\" height=\"21\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M5 21V12 M12 21V3 M19 21V8\"/></svg>Activity</button><button><svg width=\"21\" height=\"21\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M4 6h16 M4 12h16 M4 18h16 M8 3v6 M16 9v6 M10 15v6\"/></svg>Settings</button></nav>",
+      "css": ".ds-tabs{display:flex;gap:8px;padding:8px;margin:12px 20px;height:72px;border-radius:30px;background:#FFFFFF;box-shadow:0 6px 18px #00000029}.ds-tabs button{flex:1;min-height:48px;border:0;border-radius:24px;background:transparent;color:#5D675F;font:12px/17px Manrope,sans-serif;cursor:pointer}.ds-tabs button[aria-current]{background:#86DB6E;color:#102015}.ds-tabs svg{display:block;margin:0 auto 3px}.ds-tabs button:hover{opacity:.9}.ds-tabs button:active{opacity:.75}.ds-tabs button:focus-visible{outline:2px solid #257338;outline-offset:2px}"
     },
     {
       "name": "Goal progress contact",
@@ -350,20 +405,40 @@
       "description": "Wrapped recurring-period selection, with explicit selected state.",
       "html": "<div class=\"ds-frequency\"><button aria-pressed=\"true\">Daily</button><button aria-pressed=\"false\">Weekly</button><button aria-pressed=\"false\">Monthly</button></div>",
       "css": ".ds-frequency{display:flex;flex-wrap:wrap;gap:8px}.ds-frequency button{min-height:48px;padding:12px 20px;border:0;border-radius:16px;background:#E9EDE5;color:#17221A;font:16px/24px Manrope,sans-serif;cursor:pointer}.ds-frequency button[aria-pressed=\"true\"]{background:#86DB6E}.ds-frequency button:hover{opacity:.9}.ds-frequency button:active{opacity:.75}.ds-frequency button:focus-visible{outline:2px solid #257338;outline-offset:3px}"
+    },
+    {
+      "name": "Aligned balance metrics",
+      "kind": "custom",
+      "description": "One translucent header panel with three aligned rows; native stacks labels and values for narrow widths, large text or long amounts.",
+      "html": "<section class=\"ds-metrics\" aria-label=\"Balance totals\"><div><span><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M2 8h20 M3 4h18v16H3z\"/></svg>Bank balance</span><strong>INR 20</strong></div><div><span><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18 M12 7a5 5 0 1 0 0 10a5 5 0 1 0 0-10\"/></svg>Saved</span><strong>INR 0</strong></div><div><span><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M4 8h13v10H4z M17 9h2a3 3 0 0 1 0 6h-2 M3 21h16\"/></svg>Allowance left</span><strong>INR 0</strong></div></section>",
+      "css": ".ds-metrics{border-radius:16px;padding:0 16px;background:#FFFFFF10;color:#C4D6C4;font:14px/21px Manrope,sans-serif}.ds-metrics div{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:56px;padding:12px 0}.ds-metrics div+div{border-top:1px solid #FFFFFF18}.ds-metrics strong{color:#F6F8F3;font-size:22px;line-height:30px;font-variant-numeric:tabular-nums;text-align:right}@media(max-width:359px){.ds-metrics div{flex-direction:column;align-items:stretch}}.ds-metrics span{display:flex;align-items:center;gap:10px}.ds-metrics svg{color:#86DB6E;flex-shrink:0}"
+    },
+    {
+      "name": "Funding review dialog",
+      "kind": "custom",
+      "description": "Static translation of the existing themed dialog, actual-amount explanation and three funding choices; persistence and preview validation remain native/app behavior.",
+      "html": "<section class=\"ds-funding\" role=\"dialog\" aria-label=\"Review your balance\"><h3>Review your balance</h3><p>You have INR 20 available. Saving INR 14,000 needs INR 13,980 more.</p><aside><strong>INR 20 + INR 13,980 = INR 14,000</strong><p>Reserve INR 14,000 for your goal; INR 0 remains available. Existing savings and allowances stay reserved.</p></aside><label><input type=\"checkbox\" checked /> Show explanations</label><p>Confirm this reflects funds you actually have. Paycebo only updates your tracked balance.</p><button class=\"secondary\">Set balance to INR 14,000 &amp; save</button><button class=\"primary\">Add INR 13,980 &amp; save</button><button class=\"ghost\">Cancel</button></section>",
+      "css": ".ds-funding{max-width:440px;max-height:85vh;overflow:auto;padding:24px;border-radius:24px;background:#FFFFFF;color:#17221A;font:16px/24px Manrope,sans-serif}.ds-funding h3{margin:0;font-size:22px;line-height:30px}.ds-funding aside{padding:16px;border-radius:16px;background:#E9EDE5}.ds-funding aside p,.ds-funding>p:last-of-type{font-size:14px;line-height:21px}.ds-funding label{display:flex;align-items:center;gap:8px;min-height:48px}.ds-funding button{display:block;width:100%;min-height:52px;margin-top:12px;padding:12px 20px;border:0;border-radius:16px;font:600 16px/24px Manrope,sans-serif;cursor:pointer}.ds-funding .secondary{background:#E9EDE5;color:#17221A}.ds-funding .primary{background:#86DB6E;color:#102015}.ds-funding .ghost{background:transparent;color:#17221A}.ds-funding button:hover{opacity:.9}.ds-funding button:active{opacity:.75}.ds-funding button:focus-visible,.ds-funding input:focus-visible{outline:2px solid #257338;outline-offset:3px}"
     }
   ],
   "narrative": {
     "northStar": "Personal money plans as contacts.",
-    "overview": "Paycebo presents future goals and everyday allowances as personal contacts. The user-approved green finance reference supplies the visual world: dark green balance headers, rounded light panels, Manrope and green controls. Calm amounts, clear labels and one focused action per task support everyday money planning. This replaces the former Notio, amber, serif and dark-only direction.\n\nThe shipped source is authoritative: `app/_layout.tsx` records direction seed `f7815d43`; `src/components/ui.tsx`, `primitives.tsx`, `OnboardingFrame.tsx`, `GoalAvatar.tsx`, `PhotoControl.tsx`, `tailwind.config.js` and the Home, allowance, expense and goal routes establish these patterns. Owned gluestack primitives are manually integrated with NativeWind 4. Frontmatter pixels represent React Native logical units. Display/body font fallbacks handle loading failure; input typography still uses the platform default.\n\nVerification boundary: reported browser walkthroughs and captures cover phone, compact and wide Home, welcome/setup, allowances, overspending, photo choice, activity, settings and goal chat. The reported 50 domain/storage tests, full typecheck and Android/iOS/web exports pass. Native UI captures and comparison with the native QUALITY BAR remain unverified: no attached adb device was available and emulator lock access failed. Camera, native keyboard, gestures and OS text scaling require device checks. No HTML/CSS detector ran because this is an adaptive native target. Browser evidence, exports and sidecar previews do not establish native UI signoff.",
+    "overview": "Paycebo presents future goals and everyday allowances as personal contacts. The user-approved green finance reference supplies the visual world: dark green balance headers, rounded adaptive panels, Manrope and green controls. Calm amounts, clear labels and one focused action per task support everyday money planning. The current work extends this established world with System, Dark and Light appearance, a floating navigation dock and Android home-screen widgets. The existing green logo supplies the app icon and adaptive, monochrome, splash and favicon assets.\n\nThe shipped source is authoritative: `app/_layout.tsx` records direction seed `f7815d43`; `src/lib/appearance.ts`, `src/state/AppearanceProvider.tsx`, `src/state/FundingHintsProvider.tsx`, `src/components/ui.tsx`, `primitives.tsx`, `OnboardingFrame.tsx`, `FloatingTabBar.tsx`, `BalanceMetrics.tsx`, `GoalAvatar.tsx`, `PhotoControl.tsx`, `src/widgets/render.android.tsx`, `tailwind.config.js` and the Home, allowance, expense and goal routes establish these patterns. Owned gluestack primitives are manually integrated with NativeWind 4. Frontmatter pixels represent React Native logical units. Display/body font fallbacks handle loading failure; input typography still uses the platform default. The funding dialog and aligned metric rows extend the existing green world without a new visual concept or font system.\n\nVerification boundary: Domain verification passed 65 tests, TypeScript checked 48 source files, and web/Android/iOS exports passed. Browser checks covered both funding actions, Cancel, storage failure/retry, duplicate taps, shared explanation persistence and preference write failure, compact layouts and both themes. API 35 Android emulator checks used a locally signed QA APK with the current exported Hermes bundle in the existing EAS-built native shell: INR 20 to INR 14,000 top-up, Cancel preserving 14000, explanation toggle off, committed bank/saved/Safe to Spend totals and Pay enabled for the unfinished goal at zero availability. Balance rows passed normal text and font scale 1.3 inspection with complete labels and amounts. Review evidence: `.impeccable/review/funding-native-home-dark-phone.png`, `funding-native-popup-dark-phone.png`, `funding-native-success-dark-phone.png`, `funding-native-home-large-phone.png` and `funding-popup-light-compact.png`. The EAS cloud distribution build was not regenerated; a fresh EAS build is needed for distribution. Earlier API 35 captures also cover light/dark Home, theme controls, keyboard-visible setup/allowance forms, success alignment, dock/last-row scrolling and pinned widget families. iOS runtime, physical-device camera/gestures/performance, full screen-reader navigation and battery-restricted/background widget refresh remain acceptance checks. See QA.md.",
     "keyCharacteristics": [
-      "Dark green headers above rounded light working surfaces.",
+      "Dark green headers above rounded light or forest-dark working surfaces.",
       "Manrope headings and body copy with clear INR amounts.",
-      "Green rounded actions and explicit selected controls.",
+      "Green rounded actions, explicit selected controls and a floating rounded navigation dock.",
       "Circular goal and allowance contacts with photo or initials fallback.",
       "Flat activity rows, conversational savings and restrained semantic tints.",
-      "Safe areas, scalable text, reduced motion and keyboard-safe forms."
+      "Safe areas, scalable text, reduced motion and keyboard-safe forms.",
+      "One aligned translucent balance panel and factual funding review with optional actual-amount explanations."
     ],
     "rules": [
+      {
+        "name": "Appearance Continuity",
+        "body": "Default to System and resolve all working surfaces, fields, overlays, navigation, status bars and semantic text through the shared appearance palette. Explicit Dark and Light choices persist separately from money data; a failed save keeps the previous preference active.",
+        "section": "colors"
+      },
       {
         "name": "Meaning Before Color",
         "body": "Transaction meaning, errors and demo mode need words or icons as well as tint.",
@@ -376,16 +451,17 @@
       },
       {
         "name": "Tonal Depth",
-        "body": "Use tonal surfaces, restrained header gradients and dividers before adding elevation effects.",
+        "body": "Use tonal surfaces, restrained header gradients and dividers; reserve the implemented lift for the floating dock.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "**Do** preserve dark green headers, rounded light surfaces, Manrope and green actions.",
+      "**Do** preserve dark green headers, adaptive rounded surfaces, Manrope and green actions.",
       "**Do** preserve safe areas, scalable text, minimum 48-unit controls and keyboard-safe forms.",
       "**Do** pair transaction color with words and label demo money explicitly.",
       "**Do** use tonal surfaces and flat divided activity rows.",
-      "**Do** retain reduced-motion handling and image-to-initials fallbacks."
+      "**Do** retain reduced-motion handling and image-to-initials fallbacks.",
+      "**Do** keep funding facts and cancel available, preserve inputs on failure and confirm only committed money changes."
     ],
     "donts": [
       "**Don't** imply bank connectivity, real money transfers or cloud photo uploads through visuals or labels.",

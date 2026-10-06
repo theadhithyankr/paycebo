@@ -1,17 +1,22 @@
+import { useAppTheme } from "../state/AppearanceProvider";
 import React, { useEffect, useRef, useState } from "react";
-import { AccessibilityInfo, Animated, KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { IconButton, Mark, palette, Txt } from "./ui";
+import { AccessibilityInfo, Animated, Platform, View } from "react-native";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { IconButton, Mark, Txt } from "./ui";
 import { StatusBar } from "expo-status-bar";
+import { KeyboardAwareScrollView, KeyboardStickyView } from "react-native-keyboard-controller";
 
 export function OnboardingFrame({ step, title, children, footer, onBack, busy = false }: {
   step: number; title: string; children: React.ReactNode; footer: React.ReactNode; onBack: () => void; busy?: boolean;
 }) {
+  const { colors: palette } = useAppTheme();
+  const insets = useSafeAreaInsets();
   const [reduced, setReduced] = useState(true);
   const progress = Math.min(100, (step + 1) * 20);
   const fill = useRef(new Animated.Value(progress)).current;
   const opacity = useRef(new Animated.Value(1)).current;
-  const scroll = useRef<ScrollView>(null);
+  const scroll = useRef<React.ElementRef<typeof KeyboardAwareScrollView>>(null);
+  const [footerHeight, setFooterHeight] = useState(0);
   useEffect(() => {
     let alive = true;
     void AccessibilityInfo.isReduceMotionEnabled().then((value) => { if (alive) setReduced(value); }).catch(() => {});
@@ -31,7 +36,7 @@ export function OnboardingFrame({ step, title, children, footer, onBack, busy = 
   }, [step, title, reduced, opacity]);
   return <SafeAreaView className="flex-1" style={{ backgroundColor: palette.dark }}>
     <StatusBar style="light" />
-    <KeyboardAvoidingView className="flex-1 bg-background" behavior={Platform.OS === "ios" ? "padding" : "height"}>
+    <View className="flex-1 bg-background">
       <View className="px-6 pt-2 pb-5 gap-3" style={{ backgroundColor: palette.dark }}>
         <View className="flex-row items-center justify-between">
           <IconButton name="arrow-left" label={step === 4 ? "Go to my savings" : step === 0 ? "Back to welcome" : "Previous question"} onPress={onBack} disabled={busy} color={palette.onDark} />
@@ -49,11 +54,11 @@ export function OnboardingFrame({ step, title, children, footer, onBack, busy = 
           <Txt style={{ fontSize: 13, color: palette.accent }}>{progress}%</Txt>
         </View>
       </View>
-      <ScrollView ref={scroll} className="flex-1" keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 24, paddingTop: 36, paddingBottom: 24, flexGrow: 1 }}>
+      <KeyboardAwareScrollView ref={scroll} bottomOffset={footerHeight + 16} extraKeyboardSpace={footerHeight} style={{ flex: 1 }} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingHorizontal: 24, paddingTop: 36, paddingBottom: footerHeight + 24, flexGrow: 1 }}>
         <Animated.View style={{ opacity, flex: 1, gap: 24 }}>{children}</Animated.View>
-      </ScrollView>
-      <View className="px-6 pt-4 pb-3 gap-2 border-t border-line">{footer}</View>
-    </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
+      <KeyboardStickyView offset={{ opened: insets.bottom }} style={{ backgroundColor: palette.background, paddingHorizontal: 24, paddingTop: 12, paddingBottom: 12, gap: 8 }} onLayout={(event) => setFooterHeight(event.nativeEvent.layout.height)}>{footer}</KeyboardStickyView>
+    </View>
   </SafeAreaView>;
 }

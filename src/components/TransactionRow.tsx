@@ -1,9 +1,10 @@
+import { useAppTheme } from "../state/AppearanceProvider";
 import { router } from "expo-router";
 import React from "react";
 import { Pressable, View } from "react-native";
 import { money, type Goal, type Transaction } from "../lib/model";
 import { GoalAvatar } from "./GoalAvatar";
-import { Icon, palette, Txt } from "./ui";
+import { Icon, Txt } from "./ui";
 
 export function formatDate(value: string, includeTime = false): string {
   return new Date(value).toLocaleString("en-IN", {
@@ -12,6 +13,7 @@ export function formatDate(value: string, includeTime = false): string {
   });
 }
 export function TransactionRow({ transaction, goal }: { transaction: Transaction; goal: Goal }) {
+  const { colors: palette } = useAppTheme();
   const paid = transaction.kind === "contribution";
   return <Pressable onPress={() => router.push({ pathname: "/goal/[id]", params: { id: goal.id } })}
     accessibilityRole="button" accessibilityLabel={(paid ? "Paid " : "Requested ") + money(transaction.amountPaise) + (paid ? " to " : " from ") + goal.name + ". " + transaction.note}

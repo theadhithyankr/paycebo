@@ -1,15 +1,18 @@
+import { useAppTheme } from "../../src/state/AppearanceProvider";
 import { LinearGradient } from "expo-linear-gradient";
 import { router, useFocusEffect } from "expo-router";
 import React, { useCallback, useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
 import { GoalAvatar } from "../../src/components/GoalAvatar";
 import { ExpenseRow } from "../../src/components/ExpenseRow";
+import { BalanceMetrics } from "../../src/components/BalanceMetrics";
 import { TransactionRow } from "../../src/components/TransactionRow";
-import { ActionSheet, Button, DemoBanner, Display, ErrorNotice, Icon, Mark, Page, palette, Txt } from "../../src/components/ui";
+import { ActionSheet, Button, DemoBanner, Display, ErrorNotice, Icon, Mark, Page, Txt } from "../../src/components/ui";
 import { allowanceRemaining, allowanceSpent, money, progressFor, safeToSpend, savedFor, totalAllowanceReserved, totalSaved } from "../../src/lib/model";
 import { useSavings } from "../../src/state/SavingsProvider";
 
 export default function Home() {
+  const { colors: palette } = useAppTheme();
   const { state, now, reminderError, refreshReminders } = useSavings();
   const [adding, setAdding] = useState(false);
   useFocusEffect(useCallback(() => { void refreshReminders(); }, [refreshReminders]));
@@ -20,7 +23,7 @@ export default function Home() {
     ...state.transactions.map((entry) => ({ kind: "saving" as const, entry })),
     ...state.expenses.map((entry) => ({ kind: "expense" as const, entry })),
   ].sort((a, b) => Date.parse(b.entry.createdAt) - Date.parse(a.entry.createdAt)).slice(0, 4);
-  return <Page dark padded={false}>
+  return <Page dark dock padded={false}>
     <LinearGradient colors={["#0B1711", "#284E33"]} style={{ paddingHorizontal: 24, paddingTop: 16, paddingBottom: 28, gap: 16 }}>
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center gap-2"><Mark color={palette.accent} /><Txt style={{ fontSize: 24, fontWeight: "700", color: palette.onDark }}>paycebo</Txt></View>
@@ -30,9 +33,7 @@ export default function Home() {
         <Txt accessibilityLabel={"Safe to Spend " + money(safe)} style={{ color: safe < 0 ? "#FFB9B9" : palette.onDark, fontSize: money(safe).length > 10 ? 36 : 44, lineHeight: 54, fontWeight: "700", letterSpacing: -1.2, fontVariant: ["tabular-nums"] }}>{money(safe)}</Txt>
         <Txt style={{ color: palette.darkMuted, fontSize: 14 }}>{safe < 0 ? "Your reservations exceed your balance. Update it before saving more." : "For today. With tomorrow taken care of."}</Txt>
       </View>
-      <View className="flex-row flex-wrap gap-5">
-        {[{ label: "Bank balance", value: state.bankBalancePaise }, { label: "Saved", value: totalSaved(state) }, { label: "Allowances", value: totalAllowanceReserved(state, now) }].map((item) => <View key={item.label} className="gap-1"><Txt style={{ color: palette.darkMuted, fontSize: 12 }}>{item.label}</Txt><Txt style={{ color: palette.onDark, fontWeight: "600", fontSize: 15 }}>{money(item.value)}</Txt></View>)}
-      </View>
+      <BalanceMetrics bank={state.bankBalancePaise} saved={totalSaved(state)} allowance={totalAllowanceReserved(state, now)} />
       <View className="flex-row gap-3">
         {[{ label: "Update balance", icon: "refresh-cw" as const, action: () => router.push("/balance") }, { label: "New allowance", icon: "coffee" as const, action: () => router.push("/allowance-form") }, { label: "New goal", icon: "target" as const, action: () => router.push("/goal-form") }].map((item) => <Pressable key={item.label} accessibilityRole="button" accessibilityLabel={item.label} onPress={item.action} className="flex-1 items-center justify-center gap-1.5 rounded-2xl py-3" style={{ minHeight: 72, backgroundColor: "#FFFFFF10", borderWidth: 1, borderColor: "#FFFFFF20" }}><Icon name={item.icon} color={palette.accent} size={22} /><Txt style={{ color: palette.onDark, fontSize: 12, lineHeight: 17, textAlign: "center" }}>{item.label}</Txt></Pressable>)}
       </View>
@@ -57,7 +58,7 @@ export default function Home() {
             <View className="flex-1 gap-1"><Txt className="font-medium">{allowance.name}</Txt><Txt className="text-muted" style={{ fontSize: 12 }}>{money(allowance.amountPaise)} / {allowance.frequency === "daily" ? "day" : allowance.frequency === "weekly" ? "week" : "month"}</Txt></View>
             <View className="items-end"><Txt style={{ color: over > 0 ? palette.danger : palette.accentText, fontWeight: "700" }}>{money(over || remaining)}</Txt><Txt className="text-muted" style={{ fontSize: 12 }}>{over > 0 ? "over budget" : "left"}</Txt></View>
           </Pressable>;
-        }) : <Pressable accessibilityRole="button" accessibilityLabel="Create your first allowance" onPress={() => router.push("/allowance-form")} className="bg-[#E2EEDD] rounded-2xl p-5 gap-2"><Icon name="coffee" color={palette.accentText} /><Txt className="font-medium">A little for food, travel, or everyday life.</Txt><Txt style={{ color: palette.accentText, fontSize: 14 }}>Create an allowance →</Txt></Pressable>}
+        }) : <Pressable accessibilityRole="button" accessibilityLabel="Create your first allowance" onPress={() => router.push("/allowance-form")} className="bg-contribution rounded-2xl p-5 gap-2"><Icon name="coffee" color={palette.accentText} /><Txt className="font-medium">A little for food, travel, or everyday life.</Txt><Txt style={{ color: palette.accentText, fontSize: 14 }}>Create an allowance →</Txt></Pressable>}
       </View>
       <View><View className="flex-row items-center justify-between"><Display style={{ fontSize: 23 }}>Recent activity</Display><Pressable accessibilityRole="button" accessibilityLabel="View all activity" onPress={() => router.push("/(tabs)/activity")} className="min-h-[48px] justify-center"><Txt style={{ color: palette.accentText, fontSize: 13 }}>See all</Txt></Pressable></View>
         {entries.length ? entries.map((item) => {

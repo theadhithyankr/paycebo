@@ -1,13 +1,13 @@
 # Paycebo roadmap
 
-The current release includes the green/light design, lean onboarding, local goal photos, and recurring allowances. The items below are future work, not implemented features.
+The current release includes the green light/dark design, lean onboarding, local goal photos, recurring allowances, and Android home-screen widgets. The items below are future work, not implemented features.
 
 | Priority | Addition | Suggested access |
 | --- | --- | --- |
 | 1 | Manual backup/restore with photos | Free |
 | 2 | Optional scheduled saving/allowance reminders | Free |
 | 3 | Savings forecasts and detailed monthly trends | Pro |
-| 4 | Home widget and extra themes | Pro |
+| 4 | Additional color themes and widget customization | Pro |
 | Later | Cloud backup and device sync | Evaluate recurring costs separately |
 
 ## India-first revenue experiment

@@ -1,15 +1,17 @@
+import { useAppTheme } from "../../src/state/AppearanceProvider";
 import { Redirect, router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import React, { useCallback, useRef } from "react";
 import { FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { GoalAvatar } from "../../src/components/GoalAvatar";
 import { formatDate } from "../../src/components/TransactionRow";
-import { Button, DemoBanner, Display, Empty, Icon, IconButton, Page, palette, Txt } from "../../src/components/ui";
+import { Button, DemoBanner, Display, Empty, Icon, IconButton, Page, Txt } from "../../src/components/ui";
 import { money, progressFor, savedFor, safeToSpend, type Reminder, type Transaction, WEEKDAYS } from "../../src/lib/model";
 import { useSavings } from "../../src/state/SavingsProvider";
 
 type ChatItem = { type: "transaction"; value: Transaction } | { type: "reminder"; value: Reminder };
 export default function GoalChat() {
+  const { colors: palette } = useAppTheme();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { state, refreshReminders, now } = useSavings();
   const list = useRef<FlatList<ChatItem>>(null);
@@ -62,7 +64,7 @@ export default function GoalChat() {
         </View>;
         const tx = item.value;
         const paid = tx.kind === "contribution";
-        return <View className="self-end rounded-2xl rounded-tr-sm p-4 gap-2" style={{ maxWidth: "90%", minWidth: 170, backgroundColor: paid ? "#E2EEDD" : "#FCE9E9" }}>
+        return <View className="self-end rounded-2xl rounded-tr-sm p-4 gap-2" style={{ maxWidth: "90%", minWidth: 170, backgroundColor: paid ? palette.contribution : palette.withdrawal }}>
           <View className="flex-row items-center gap-2"><Icon name={paid ? "arrow-up-right" : "arrow-down-left"} size={18} color={paid ? palette.positive : palette.danger} /><Txt style={{ color: paid ? palette.positive : palette.danger, fontSize: 12 }}>{paid ? "Paid to your goal" : "Requested back"}</Txt></View>
           <Txt style={{ fontSize: 30, lineHeight: 38, fontWeight: "600", fontVariant: ["tabular-nums"] }}>{paid ? "" : "−"}{money(tx.amountPaise)}</Txt>
           {tx.note ? <Txt>{tx.note}</Txt> : null}
@@ -71,8 +73,8 @@ export default function GoalChat() {
       }}
       ListFooterComponent={progress >= 1 ? <View className="items-center py-6 gap-2"><Icon name="check-circle" size={26} color={palette.positive} /><Display style={{ fontSize: 25 }}>You made it.</Display><Txt className="text-muted" style={{ textAlign: "center" }}>Fully funded. Take a moment to enjoy that.</Txt></View> : items.length === 0 ? <Txt className="text-muted py-4" style={{ textAlign: "center", fontSize: 13 }}>No payments yet. Your first little win is waiting.</Txt> : null} />
     <SafeAreaView edges={["bottom"]} className="border-t border-line bg-background px-6 pt-4">
-      <View className="flex-row flex-wrap gap-3"><View className="flex-1" style={{ minWidth: 140 }}><Button label="Request Money" variant="secondary" disabled={saved <= 0} onPress={() => pay("withdrawal")} /></View><View className="flex-1" style={{ minWidth: 100 }}><Button label={progress >= 1 ? "Funded" : "Pay"} icon={progress >= 1 ? "check" : "arrow-up-right"} disabled={progress >= 1 || safeToSpend(state, now) <= 0} onPress={() => pay("contribution")} /></View></View>
-      <Txt className="text-muted py-3" style={{ textAlign: "center", fontSize: 12, lineHeight: 18 }}>{safeToSpend(state, now) <= 0 && progress < 1 ? "Update your bank balance or request funds back to pay a goal." : "An allocation, not a bank transfer."}</Txt>
+      <View className="flex-row flex-wrap gap-3"><View className="flex-1" style={{ minWidth: 140 }}><Button label="Request Money" variant="secondary" disabled={saved <= 0} onPress={() => pay("withdrawal")} /></View><View className="flex-1" style={{ minWidth: 100 }}><Button label={progress >= 1 ? "Funded" : "Pay"} icon={progress >= 1 ? "check" : "arrow-up-right"} disabled={progress >= 1} onPress={() => pay("contribution")} /></View></View>
+      <Txt className="text-muted py-3" style={{ textAlign: "center", fontSize: 12, lineHeight: 18 }}>{safeToSpend(state, now) <= 0 && progress < 1 ? "You can review your balance when paying this goal." : "An allocation, not a bank transfer."}</Txt>
     </SafeAreaView>
   </Page>;
 }

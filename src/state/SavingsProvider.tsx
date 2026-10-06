@@ -5,6 +5,7 @@ import { demoState } from "../lib/demo";
 import { generateReminders, type GoalInput, type Mode, type SavingsState } from "../lib/model";
 import { SavingsRepository } from "../lib/repository";
 import { createPersonalState } from "../lib/onboarding";
+import { refreshWidgets } from "../widgets/service";
 
 interface SavingsContextValue {
   state: SavingsState | null;
@@ -34,7 +35,7 @@ export function SavingsProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
     const refresh = () => {
-      const time = new Date(); setNow(time);
+      const time = new Date(); setNow(time); void refreshWidgets().catch(() => {});
       const midnight = new Date(time); midnight.setHours(24, 0, 0, 0);
       clearTimeout(timer); timer = setTimeout(refresh, midnight.getTime() - time.getTime() + 50);
     };
@@ -55,7 +56,7 @@ export function SavingsProvider({ children }: { children: React.ReactNode }) {
         try { await AsyncStorage.setItem(key, value); }
         catch { throw new Error("Couldn’t save on this device. Free some storage and try again. Your changes haven’t been applied."); }
       },
-    }, (next, nextMode) => { setState(next); setMode(nextMode); setNow(new Date()); });
+    }, (next, nextMode) => { setState(next); setMode(nextMode); setNow(new Date()); if (nextMode === "personal") void refreshWidgets().catch(() => {}); });
   }
   const repository = repositoryRef.current;
   const retry = useCallback(async () => {

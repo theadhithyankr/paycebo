@@ -1,12 +1,14 @@
+import { useAppTheme } from "../src/state/AppearanceProvider";
 import * as Haptics from "expo-haptics";
 import { Redirect, router, useLocalSearchParams } from "expo-router";
 import React, { useRef, useState } from "react";
 import { View } from "react-native";
-import { Button, ConfirmDialog, Display, ErrorNotice, Field, FormPage, Icon, Notice, palette, Txt } from "../src/components/ui";
+import { Button, ConfirmDialog, Display, ErrorNotice, Field, FormPage, Icon, Notice, Txt } from "../src/components/ui";
 import { addExpense, allowanceRemaining, money, parseMoney } from "../src/lib/model";
 import { errorMessage, useSavings } from "../src/state/SavingsProvider";
 
 export default function ExpenseForm() {
+  const { colors: palette } = useAppTheme();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { state, now, update } = useSavings();
   const [amount, setAmount] = useState(""); const [note, setNote] = useState("");
@@ -39,12 +41,11 @@ export default function ExpenseForm() {
     <Notice>Your tracked bank balance is now {money(state.bankBalancePaise)}. No money was transferred by Paycebo.</Notice>
     <Button label="Back to allowance" onPress={() => router.back()} />
   </FormPage>;
-  return <FormPage title={"Spent on " + allowance.name} busy={busy}>
+  return <FormPage title={"Spent on " + allowance.name} busy={busy} footer={<><ErrorNotice message={error} /><Button label="Record expense" loading={busy} onPress={submit} /></>}>
     <Txt className="text-muted">{money(remaining)} left this {allowance.frequency === "daily" ? "day" : allowance.frequency === "weekly" ? "week" : "month"}</Txt>
     <Field label="Amount spent (₹)" value={amount} onChangeText={setAmount} placeholder="0" keyboardType="decimal-pad" maxLength={12} editable={!busy} style={{ fontSize: 32, lineHeight: 42 }} />
     <Field label="Note (optional)" value={note} onChangeText={setNote} placeholder="e.g. Lunch" maxLength={200} editable={!busy} />
     <Txt className="text-muted" style={{ fontSize: 14 }}>Recording spending adjusts your tracked bank balance.</Txt>
-    <ErrorNotice message={error} /><Button label="Record expense" loading={busy} onPress={submit} />
     <ConfirmDialog open={confirm !== null} onClose={() => { if (!busy) setConfirm(null); }} title="A little over your allowance">
       <Txt>This expense puts you {money(Math.max(0, (confirm ?? 0) - remaining))} beyond the remaining allowance. Record what actually happened?</Txt>
       <Button label="Record anyway" loading={busy} onPress={() => { if (confirm !== null) void commit(confirm, true); }} /><Button label="Go back" variant="secondary" disabled={busy} onPress={() => setConfirm(null)} />

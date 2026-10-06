@@ -1,13 +1,15 @@
+import { useAppTheme } from "../../src/state/AppearanceProvider";
 import { Redirect, router, useLocalSearchParams } from "expo-router";
 import React, { useRef, useState } from "react";
 import { View } from "react-native";
 import { GoalAvatar } from "../../src/components/GoalAvatar";
 import { ExpenseRow } from "../../src/components/ExpenseRow";
-import { Button, ConfirmDialog, Display, Empty, ErrorNotice, IconButton, Page, palette, Txt } from "../../src/components/ui";
+import { Button, ConfirmDialog, Display, Empty, ErrorNotice, IconButton, Page, Txt } from "../../src/components/ui";
 import { allowanceRemaining, allowanceSpent, archiveAllowance, money } from "../../src/lib/model";
 import { errorMessage, useSavings } from "../../src/state/SavingsProvider";
 
 export default function AllowanceDetail() {
+  const { colors: palette } = useAppTheme();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { state, now, update } = useSavings();
   const [confirm, setConfirm] = useState(false);

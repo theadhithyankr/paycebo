@@ -6,6 +6,7 @@ web-build/
 /ios/
 .npm-cache/
 .verification/
+.g/
 .firecrawl/
 .impeccable/review/
 *.log
@@ -17,3 +18,8 @@ web-build/
 
 expo-env.d.ts
 # @end expo-cli
+
+# Local Android signing credentials
+/credentials.json
+/credentials/
+*.jks

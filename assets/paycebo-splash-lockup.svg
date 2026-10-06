@@ -1,9 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300">
-  <g transform="translate(34 22) scale(1)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="128" cy="128" r="105" stroke="#EDB780" stroke-width="9" stroke-dasharray="620 40" transform="rotate(-45 128 128)"/>
-    <path d="M91 191V65h43c31 0 51 17 51 43s-20 43-51 43H91" stroke="#F5F2EC" stroke-width="15"/>
-    <circle cx="190" cy="66" r="7" fill="#EDB780" stroke="none"/>
-  </g>
-  <text x="300" y="137" fill="#F5F2EC" font-family="Aleo, Georgia, serif" font-size="72" letter-spacing="-2">Paycebo</text>
-  <text x="304" y="190" fill="#B2AFA9" font-family="Arial, sans-serif" font-size="25" letter-spacing="1.1">Pay your future self.</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300"><g transform="translate(26 6) scale(3)"><g transform="translate(19 15) scale(1.8)"><path d="M8 28V6h8a9 9 0 0 1 0 18h-4M8 15h8a3 3 0 0 1 0 6h-4" fill="none" stroke="#86DB6E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g></g><text x="302" y="140" font-family="Manrope" font-weight="700" font-size="64" fill="#17221A">Paycebo</text><text x="304" y="194" font-family="Manrope" font-size="25" fill="#5D675F">Pay your future self.</text></svg>

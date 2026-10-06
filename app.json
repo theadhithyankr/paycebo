@@ -5,18 +5,10 @@
     "scheme": "paycebo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "backgroundColor": "#F4F5F1",
+    "backgroundColor": "#0B1711",
     "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#0B0B0C",
-      "dark": {
-        "backgroundColor": "#0B0B0C"
-      }
-    },
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "app.paycebo.mobile"
@@ -26,15 +18,8 @@
       "predictiveBackGestureEnabled": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#0B0B0C"
-      },
-      "splash": {
-        "image": "./assets/splash.png",
-        "resizeMode": "contain",
-        "backgroundColor": "#0B0B0C",
-        "dark": {
-          "backgroundColor": "#0B0B0C"
-        }
+        "backgroundColor": "#0B1711",
+        "monochromeImage": "./assets/monochrome-icon.png"
       },
       "blockedPermissions": [
         "android.permission.RECORD_AUDIO",
@@ -42,13 +27,15 @@
         "android.permission.READ_MEDIA_VIDEO",
         "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.WRITE_EXTERNAL_STORAGE"
-      ]
+      ],
+      "softwareKeyboardLayoutMode": "resize"
     },
     "web": {
       "bundler": "metro",
       "output": "single",
       "name": "Paycebo",
-      "themeColor": "#0B0B0C"
+      "themeColor": "#0B1711",
+      "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-router",
@@ -59,6 +46,65 @@
           "photosPermission": "Choose a photo for your savings goal or allowance.",
           "cameraPermission": "Take a photo for your savings goal or allowance.",
           "microphonePermission": false
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash.png",
+          "backgroundColor": "#F4F5F1",
+          "imageWidth": 300,
+          "dark": {
+            "image": "./assets/splash-dark.png",
+            "backgroundColor": "#0B1711"
+          }
+        }
+      ],
+      [
+        "react-native-android-widget",
+        {
+          "fonts": [
+            "./node_modules/@expo-google-fonts/manrope/400Regular/Manrope_400Regular.ttf",
+            "./node_modules/@expo-google-fonts/manrope/700Bold/Manrope_700Bold.ttf"
+          ],
+          "widgets": [
+            {
+              "name": "PayceboBalance",
+              "label": "Paycebo Balance",
+              "description": "Safe to Spend and your personal balance.",
+              "minWidth": "250dp",
+              "minHeight": "110dp",
+              "targetCellWidth": 4,
+              "targetCellHeight": 2,
+              "resizeMode": "horizontal|vertical",
+              "widgetFeatures": "reconfigurable",
+              "updatePeriodMillis": 1800000
+            },
+            {
+              "name": "PayceboGoal",
+              "label": "Paycebo Goal",
+              "description": "Progress toward a savings goal.",
+              "minWidth": "120dp",
+              "minHeight": "110dp",
+              "targetCellWidth": 2,
+              "targetCellHeight": 2,
+              "resizeMode": "horizontal|vertical",
+              "widgetFeatures": "reconfigurable",
+              "updatePeriodMillis": 1800000
+            },
+            {
+              "name": "PayceboAllowance",
+              "label": "Paycebo Allowance",
+              "description": "Remaining everyday allowance.",
+              "minWidth": "120dp",
+              "minHeight": "110dp",
+              "targetCellWidth": 2,
+              "targetCellHeight": 2,
+              "resizeMode": "horizontal|vertical",
+              "widgetFeatures": "reconfigurable",
+              "updatePeriodMillis": 1800000
+            }
+          ]
         }
       ]
     ],

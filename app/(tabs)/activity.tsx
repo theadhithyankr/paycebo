@@ -1,19 +1,21 @@
+import { useAppTheme } from "../../src/state/AppearanceProvider";
 import React, { useState } from "react";
 import { Pressable, View } from "react-native";
 import { TransactionRow } from "../../src/components/TransactionRow";
 import { ExpenseRow } from "../../src/components/ExpenseRow";
-import { DemoBanner, Display, Empty, Page, palette, Txt } from "../../src/components/ui";
+import { DemoBanner, Display, Empty, Page, Txt } from "../../src/components/ui";
 import { money, totalSaved, type TransactionKind } from "../../src/lib/model";
 import { useSavings } from "../../src/state/SavingsProvider";
 
 export default function Activity() {
+  const { colors: palette } = useAppTheme();
   const { state } = useSavings();
   const [filter, setFilter] = useState<"all" | TransactionKind | "expense">("all");
   if (!state) return null;
   const entries = [...state.transactions.map((entry) => ({ type: "saving" as const, entry })), ...state.expenses.map((entry) => ({ type: "expense" as const, entry }))]
     .filter((item) => filter === "all" || (item.type === "expense" ? filter === "expense" : filter === item.entry.kind))
     .sort((a, b) => Date.parse(b.entry.createdAt) - Date.parse(a.entry.createdAt));
-  return <Page>
+  return <Page dock>
     <Display className="pt-6 pb-2" style={{ fontSize: 32 }}>Every little move.</Display>
     <Txt className="text-muted mb-6">Savings and everyday spending.</Txt>
     <DemoBanner />

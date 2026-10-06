@@ -1,14 +1,16 @@
+import { useAppTheme } from "../src/state/AppearanceProvider";
 import { Redirect, router, useLocalSearchParams } from "expo-router";
 import React, { useRef, useState } from "react";
 import { Pressable, View } from "react-native";
 import { GoalAvatar } from "../src/components/GoalAvatar";
-import { Button, DemoBanner, Empty, ErrorNotice, Field, FormPage, Notice, palette, Txt } from "../src/components/ui";
+import { Button, DemoBanner, Empty, ErrorNotice, Field, FormPage, Notice, Txt } from "../src/components/ui";
 import { addGoal, COLORS, editGoal, inputMoney, parseMoney, savedFor, WEEKDAYS, type Goal } from "../src/lib/model";
 import { errorMessage, useSavings } from "../src/state/SavingsProvider";
 import { PhotoControl, usePhotoChoice } from "../src/components/PhotoControl";
 import { deleteUnreferencedPhoto } from "../src/state/photoCleanup";
 
 export default function GoalForm() {
+  const { colors: palette } = useAppTheme();
   const { id } = useLocalSearchParams<{ id?: string }>();
   const { state, update } = useSavings();
   const existing = state?.goals.find((goal) => goal.id === id);
@@ -37,7 +39,7 @@ export default function GoalForm() {
     } catch (err) { setError(errorMessage(err)); }
     finally { photo.settled(); lock.current = false; setBusy(false); }
   }
-  return <FormPage title={existing ? "Edit your goal" : "Meet your next goal"} busy={busy}>
+  return <FormPage title={existing ? "Edit your goal" : "Meet your next goal"} busy={busy} footer={<><ErrorNotice message={error} /><Button label={existing ? "Save changes" : "Create goal"} icon={existing ? "check" : "plus"} disabled={photo.busy} loading={busy} onPress={() => void save()} /></>}>
     <DemoBanner />
     <View className="items-center gap-3"><GoalAvatar goal={preview} previewUri={photo.uri} size={88} /></View>
     <Field label="Goal name" value={name} onChangeText={setName} placeholder="e.g. A week in the mountains" maxLength={60} editable={!busy} autoCapitalize="words" />
@@ -60,7 +62,5 @@ export default function GoalForm() {
       </Pressable>)}</View>
     </View>
     <Notice>Reminders appear in your goal’s chat when you open Paycebo on or after your pledge day. They count that week’s payments minus requests.</Notice>
-    <ErrorNotice message={error} />
-    <Button label={existing ? "Save changes" : "Create goal"} icon={existing ? "check" : "plus"} disabled={photo.busy} loading={busy} onPress={() => void save()} />
   </FormPage>;
 }

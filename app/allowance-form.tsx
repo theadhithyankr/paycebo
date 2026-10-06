@@ -1,14 +1,16 @@
+import { useAppTheme } from "../src/state/AppearanceProvider";
 import { Redirect, router, useLocalSearchParams } from "expo-router";
 import React, { useRef, useState } from "react";
 import { Pressable, View } from "react-native";
 import { GoalAvatar } from "../src/components/GoalAvatar";
 import { PhotoControl, usePhotoChoice } from "../src/components/PhotoControl";
-import { Button, ErrorNotice, Field, FormPage, palette, Txt } from "../src/components/ui";
+import { Button, ErrorNotice, Field, FormPage, Txt } from "../src/components/ui";
 import { addAllowance, allowanceSpent, COLORS, editAllowance, inputMoney, money, parseMoney, type Allowance, type Frequency } from "../src/lib/model";
 import { errorMessage, useSavings } from "../src/state/SavingsProvider";
 import { deleteUnreferencedPhoto } from "../src/state/photoCleanup";
 
 export default function AllowanceForm() {
+  const { colors: palette } = useAppTheme();
   const { id } = useLocalSearchParams<{ id?: string }>();
   const { state, update, now } = useSavings();
   const existing = state?.allowances.find((item) => item.id === id);
@@ -38,7 +40,7 @@ export default function AllowanceForm() {
     } catch (err) { setError(errorMessage(err)); }
     finally { photo.settled(); lock.current = false; setBusy(false); }
   }
-  return <FormPage title={existing ? "Edit allowance" : "A little for everyday"} busy={busy}>
+  return <FormPage title={existing ? "Edit allowance" : "A little for everyday"} busy={busy} footer={<><ErrorNotice message={error} /><Button label={existing ? "Save allowance" : "Create allowance"} loading={busy} disabled={photo.busy} onPress={() => void save()} /></>}>
     <View className="items-center"><GoalAvatar goal={preview} size={88} previewUri={photo.uri} accessibilityLabel="Allowance photo preview" /></View>
     <Field label="Allowance name" value={name} onChangeText={setName} placeholder="e.g. Food" maxLength={60} editable={!busy} autoCapitalize="words" />
     <Field label="Amount per period (₹)" value={amount} onChangeText={setAmount} placeholder="e.g. 100" keyboardType="decimal-pad" maxLength={12} editable={!busy} />
@@ -51,7 +53,5 @@ export default function AllowanceForm() {
     <View className="gap-2"><Txt className="font-medium">Color</Txt><View className="flex-row gap-2">{COLORS.slice(0, 5).map((item, index) => <Pressable key={item} accessibilityRole="button" accessibilityLabel={["Green", "Blue", "Forest", "Lavender", "Rose"][index]} accessibilityState={{ selected: color === item, disabled: busy }} disabled={busy} onPress={() => setColor(item)}
       style={{ width: 48, height: 48, borderRadius: 24, borderWidth: 2, borderColor: color === item ? item : "transparent", alignItems: "center", justifyContent: "center" }}><View style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: item }} /></Pressable>)}</View></View>
     {value > 0 ? <View className="bg-surface rounded-2xl p-4 gap-1"><Txt>Current period reservation: {money(Math.max(0, value - spent))}</Txt>{spent > 0 ? <Txt className="text-muted" style={{ fontSize: 13 }}>Already spent this period: {money(spent)}</Txt> : null}<Txt className="text-muted" style={{ fontSize: 13 }}>Changes apply to this period.</Txt></View> : null}
-    <ErrorNotice message={error} />
-    <Button label={existing ? "Save allowance" : "Create allowance"} loading={busy} disabled={photo.busy} onPress={() => void save()} />
   </FormPage>;
 }

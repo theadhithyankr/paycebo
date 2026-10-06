@@ -1,3 +1,5 @@
+import { FundingHintsProvider } from "../src/state/FundingHintsProvider";
+import { AppearanceProvider, useAppTheme } from "../src/state/AppearanceProvider";
 import "../global.css";
 /* THESIS: Personal money plans as contacts, with one clear action per screen.
  * OWN-WORLD: User-approved dark green headers, light panels, Manrope, green controls.
@@ -7,26 +9,30 @@ import "../global.css";
  * FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
  */
 import { Manrope_400Regular, Manrope_700Bold } from "@expo-google-fonts/manrope";
-import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
+import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack, router } from "expo-router";
+import { Stack, router, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Button, ErrorNotice, FontContext, Notice, palette, Txt } from "../src/components/ui";
+import { Button, ErrorNotice, FontContext, Notice, Txt } from "../src/components/ui";
 import { SavingsProvider, useSavings } from "../src/state/SavingsProvider";
 import { onboardingDraftStore } from "../src/state/onboardingDraft";
 import { GluestackUIProvider } from "../src/components/primitives";
+import { KeyboardProvider } from "react-native-keyboard-controller";
+import * as SplashScreen from "expo-splash-screen";
 
-const theme = { ...DefaultTheme, colors: { ...DefaultTheme.colors, background: palette.background, card: palette.background, text: palette.foreground, primary: palette.accent, border: palette.line } };
+void SplashScreen.preventAutoHideAsync().catch(() => {});
 
 function Navigation() {
+  const { colors: palette } = useAppTheme();
+  const pathname = usePathname();
   const { ready, state, loadError, retry } = useSavings();
   useEffect(() => {
     let active = true;
-    if (ready && !state && !loadError) {
+    if (ready && !state && !loadError && pathname !== "/widget-link") {
       void onboardingDraftStore.read().then((draft) => { if (active) router.replace(draft ? "/setup" : "/"); })
         .catch(() => { if (active) router.replace("/"); });
     }
@@ -43,6 +49,8 @@ function Navigation() {
     <Stack.Screen name="(tabs)" />
     <Stack.Screen name="goal/[id]" />
     <Stack.Screen name="setup" />
+    <Stack.Screen name="widgets" />
+    <Stack.Screen name="widget-link" />
     <Stack.Screen name="allowance/[id]" />
     <Stack.Screen name="allowance-form" options={{ presentation: "modal" }} />
     <Stack.Screen name="expense" options={{ presentation: "modal" }} />
@@ -52,15 +60,20 @@ function Navigation() {
   </Stack>;
 }
 
-export default function RootLayout() {
+function AppShell() {
+  const { colors: palette, mode, ready } = useAppTheme();
   const [fontsLoaded, fontError] = useFonts({ Manrope_400Regular, Manrope_700Bold });
-  return <GestureHandlerRootView style={{ flex: 1, backgroundColor: palette.background }}>
-    <SafeAreaProvider><ThemeProvider value={theme}><FontContext.Provider value={fontsLoaded}>
-      <SavingsProvider><StatusBar style="dark" />
+  useEffect(() => { if (ready && (fontsLoaded || fontError)) void SplashScreen.hideAsync().catch(() => {}); }, [ready, fontsLoaded, fontError]);
+  const base = mode === "dark" ? DarkTheme : DefaultTheme;
+  const theme = { ...base, colors: { ...base.colors, background: palette.background, card: palette.surface, text: palette.foreground, primary: palette.accent, border: palette.line } };
+  return <ThemeProvider value={theme}><FontContext.Provider value={fontsLoaded}>
+      <SavingsProvider><StatusBar style={mode === "dark" ? "light" : "dark"} />
         <View nativeID="paycebo-f7815d43" className="flex-1 w-full self-center" style={{ maxWidth: 640 }}>
-          <GluestackUIProvider>{!fontsLoaded && !fontError ? <View className="flex-1 items-center justify-center"><ActivityIndicator color={palette.accent} /></View> : <Navigation />}</GluestackUIProvider>
+          <GluestackUIProvider>{!ready || (!fontsLoaded && !fontError) ? <View className="flex-1 items-center justify-center"><ActivityIndicator color={palette.accent} /></View> : <Navigation />}</GluestackUIProvider>
         </View>
       </SavingsProvider>
-    </FontContext.Provider></ThemeProvider></SafeAreaProvider>
-  </GestureHandlerRootView>;
+    </FontContext.Provider></ThemeProvider>;
+}
+export default function RootLayout() {
+  return <GestureHandlerRootView style={{ flex: 1 }}><SafeAreaProvider><AppearanceProvider><KeyboardProvider><FundingHintsProvider><AppShell /></FundingHintsProvider></KeyboardProvider></AppearanceProvider></SafeAreaProvider></GestureHandlerRootView>;
 }

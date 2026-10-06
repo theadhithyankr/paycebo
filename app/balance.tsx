@@ -21,13 +21,11 @@ export default function Balance() {
     catch (err) { setError(errorMessage(err)); }
     finally { lock.current = false; setBusy(false); }
   }
-  return <FormPage title="Update bank balance" busy={busy}>
+  return <FormPage title="Update bank balance" busy={busy} footer={<><ErrorNotice message={error} /><Button label="Update balance" loading={busy} onPress={() => void save()} /></>}>
     <DemoBanner />
     <Field label="Current bank balance (₹)" hint="Enter your actual current balance, including money reserved for goals." value={amount} onChangeText={setAmount} keyboardType="decimal-pad" maxLength={12} editable={!busy} />
     <View className="gap-2"><Txt className="text-muted">Reserved for goals: {money(totalSaved(state))}</Txt><Txt className="text-muted">Reserved for allowances: {money(totalAllowanceReserved(state, now))}</Txt><Txt className="font-medium">Safe to Spend after update: {preview === null ? "Enter a valid amount" : money(preview)}</Txt></View>
     {preview !== null && preview < 0 ? <Notice>Your reservations exceed this balance. Existing savings will be kept, but new contributions will pause until funds are available.</Notice> : null}
     <Notice>This changes the balance you entered, not your goal history. No bank connection is involved.</Notice>
-    <ErrorNotice message={error} />
-    <Button label="Update balance" loading={busy} onPress={() => void save()} />
   </FormPage>;
 }

@@ -6,9 +6,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "#F4F5F1", surface: "#FFFFFF", elevated: "#E9EDE5",
-        foreground: "#17221A", muted: "#5D675F", accent: "#86DB6E",
-        line: "#D8DFD3", positive: "#257338", danger: "#A42E38",
+        "background": "rgb(var(--color-background) / <alpha-value>)",
+        "surface": "rgb(var(--color-surface) / <alpha-value>)",
+        "elevated": "rgb(var(--color-elevated) / <alpha-value>)",
+        "foreground": "rgb(var(--color-foreground) / <alpha-value>)",
+        "muted": "rgb(var(--color-muted) / <alpha-value>)",
+        "accent": "rgb(var(--color-accent) / <alpha-value>)",
+        "line": "rgb(var(--color-line) / <alpha-value>)",
+        "positive": "rgb(var(--color-positive) / <alpha-value>)",
+        "danger": "rgb(var(--color-danger) / <alpha-value>)",
+        "danger-surface": "rgb(var(--color-danger-surface) / <alpha-value>)",
+        "contribution": "rgb(var(--color-contribution) / <alpha-value>)",
+        "withdrawal": "rgb(var(--color-withdrawal) / <alpha-value>)",
       },
       fontFamily: { display: ["Manrope_400Regular"], "display-bold": ["Manrope_700Bold"] },
     },

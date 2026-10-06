@@ -1,13 +1,15 @@
+import { useAppTheme } from "../src/state/AppearanceProvider";
 import { Redirect, router, useFocusEffect } from "expo-router";
 import { useIsFocused } from "@react-navigation/native";
 import React, { useCallback, useRef, useState } from "react";
 import { View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Button, Display, ErrorNotice, Icon, Mark, Page, palette, Txt } from "../src/components/ui";
+import { Button, Display, ErrorNotice, Icon, Mark, Page, Txt } from "../src/components/ui";
 import { errorMessage, useSavings } from "../src/state/SavingsProvider";
 import { onboardingDraftStore } from "../src/state/onboardingDraft";
 
 export default function Welcome() {
+  const { colors: palette } = useAppTheme();
   const { state, startDemo } = useSavings();
   const focused = useIsFocused();
   const [resuming, setResuming] = useState(false);
